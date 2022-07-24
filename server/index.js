@@ -2,7 +2,8 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
 const path = require("path");
-/////Apollo Server////////
+const getDb = require("./models");
+
 const { ApolloServer } = require("apollo-server-express");
 
 async function main() {
@@ -14,7 +15,7 @@ async function main() {
   }`;
   const resolvers = {
     Query: {
-      totalUsers: () => 5,
+      totalUsers: async () => 5,
     },
   };
   const apolloServer = new ApolloServer({
@@ -22,7 +23,7 @@ async function main() {
     resolvers,
   });
 
-  //////////////
+  const db = getDb();
 
   const app = express();
   await apolloServer.start();
@@ -34,6 +35,5 @@ async function main() {
   const PORT = process.env.PORT || 5000;
 
   app.listen(PORT, console.log(`Server started on port ${PORT}`));
-  // apolloServer.listen(PORT,()=>console.log(` to access the server use use https://localhost: ${PORT}`));
 }
 main();
