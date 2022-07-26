@@ -28,6 +28,7 @@ function main() {
     .catch((err) => console.log("Error:" + err));
   db.User = getUser(sequelize);
   sequelize.sync();
+  return db;
 }
 
 module.exports = main;

@@ -12,13 +12,17 @@ const { ApolloServer } = require("apollo-server-express");
 
 async function main() {
  
-
+  const db = getDb();
   const apolloServer = new ApolloServer({
     typeDefs,
     resolvers,
+    context:({req,res})=>{
+      
+      return {req,res,db}
+    }
   });
 
-  const db = getDb();
+ 
 
   const app = express();
   await apolloServer.start();
