@@ -2,18 +2,25 @@ const { Sequelize } = require("sequelize");
 
 const getUser = require("./user");
 function main() {
-  const sequelize = new Sequelize("manzilak", "postgres", "eman444abbasi", {
-    host: "localhost",
-    dialect: "postgres",
-    operatorsAliases: false,
+  const sequelize = new Sequelize(
+    process.env.DB_NAME,
+    process.env.DB_USERNAME,
+    process.env.DB_PASSWORD,
 
-    pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000,
-    },
-  });
+    {
+      dialect: process.env.DIALECT,
+      localhost: process.env.HOST,
+
+      operatorsAliases: false,
+
+      pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000,
+      },
+    }
+  );
   const db = { sequelize };
   sequelize
     .authenticate()

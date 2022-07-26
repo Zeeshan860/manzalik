@@ -1,23 +1,18 @@
+require("dotenv/config");
+
 const express = require("express");
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
 const path = require("path");
+const resolvers = require("./graphql/resolver");
+const typeDefs=require("./graphql/typedefs");
 const getDb = require("./models");
 
 const { ApolloServer } = require("apollo-server-express");
 
 async function main() {
-  const typeDefs = `
-  
-  type Query {
-  totalUsers:Int!
-  
-  }`;
-  const resolvers = {
-    Query: {
-      totalUsers: async () => 5,
-    },
-  };
+ 
+
   const apolloServer = new ApolloServer({
     typeDefs,
     resolvers,
