@@ -1,41 +1,65 @@
-const bcrypt = require('bcryptjs')
-const jwt =  require('jsonwebtoken')
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const resolvers = {
+  Query: {
+    totalUsers: async (parent, args, context, info) => {
+      const db = context.db;
 
-    Query: {
-      totalUsers: async (parent,args,context,info) => {
-        const db=context.db; 
-     
-        const count=await db.User.count()
-        return count;
-
-      },
+      const count = await db.User.count();
+      return count;
     },
+  },
   Mutation: {
-     registerUser:async (parent,args,context,info) =>{
+    registerUser: async (parent, args, context, info) => {
       try {
-        const db=context.db; 
-        const {firstName,lastName,phoneNo,email,password}=args;
+        const db = context.db;
+        const { firstName, lastName, phoneNo, email, password } = args;
         const user = await db.User.create({
           firstName,
           lastName,
           phoneNo,
           email,
-          password: await bcrypt.hash(password, 10)
-        })
+          password: await bcrypt.hash(password, 10),
+        });
         const token = jwt.sign(
-          { id: user.id, email: user.email},
+          { id: user.id, email: user.email },
           process.env.JWT_SECRET,
-          { expiresIn: '1y' }
-        )
+          { expiresIn: "1y" }
+        );
         return {
           token,
-          user
+          user,
+        };
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    },
+    login: async (parent, args, context, info) => {
+      try {
+        const db = context.db;
+        const { email, password } = args;
+        const user = await db.User.findOne({ where: { email } });
+        if (!user) {
+          throw new Error("No user with that email");
         }
-       } 
-       catch (error) {
-        throw new Error(error.message)
+        const isValid = await bcrypt.compare(password, user.password);
+        if (!isValid) {
+          throw new Error("Incorrect password");
+        }
+        // return jwt
+        const token = jwt.sign(
+          { id: user.id, email: user.email },
+          process.env.JWT_SECRET,
+          { expiresIn: "1d" }
+        );
+        return {
+          token,
+          user,
+        };
+      } catch (error) {
+        throw new Error(error.message);
       }
     }
-}}
-module.exports=resolvers;
+  },
+};
+module.exports = resolvers;

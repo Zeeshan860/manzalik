@@ -23,7 +23,13 @@ type Mutation {
         email: String! ,
         password: String!):AuthPayload!
     
-
+    login(
+        email:String!,
+        password: String!):AuthPayload!
+    
 }
+
+
+
  `;
 module.exports = typeDefs;
