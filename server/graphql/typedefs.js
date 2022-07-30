@@ -19,7 +19,7 @@ type Query {
 type Mutation {
     registerUser (   firstName:String!,
         lastName: String!,
-        phoneNo: Int!,
+        phoneNo: String!,
         email: String! ,
         password: String!):AuthPayload!
     

@@ -79,9 +79,9 @@ export default function Register() {
         {mdUp && (
           <SectionStyle>
             <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-              Manage the job more effectively with Minimal
+             BEST RENT HOUSES!
             </Typography>
-            <img alt="register" src="/static/illustrations/illustration_register.png" />
+            <img alt="register" src="/static/illustrations/illustration_register.jpg" />
           </SectionStyle>
         )}
 
@@ -93,12 +93,12 @@ export default function Register() {
 
             <Typography sx={{ color: 'text.secondary', mb: 5 }}>Free forever. No credit card needed.</Typography>
 
-            <AuthSocial />
+          
 
             <RegisterForm />
 
             <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-              By registering, I agree to Minimal&nbsp;
+              By registering, I agree to Manzilak&nbsp;
               <Link underline="always" color="text.primary" href="#">
                 Terms of Service
               </Link>
