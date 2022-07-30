@@ -6,10 +6,13 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { Link, Stack, IconButton, InputAdornment } from '@mui/material';
+import { useMutation } from '@apollo/client';
 import { LoadingButton } from '@mui/lab';
+import { LOGIN_USER_MUTATION } from '../../../graphql';
 // components
 import Iconify from '../../../components/Iconify';
 import { FormProvider, RHFTextField, RHFCheckbox } from '../../../components/hook-form';
+import { AUTH_TOKEN } from '../../../constant';
 
 // ----------------------------------------------------------------------
 
@@ -17,6 +20,7 @@ export default function LoginForm() {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [loginUser] = useMutation(LOGIN_USER_MUTATION);
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
@@ -39,10 +43,16 @@ export default function LoginForm() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = async () => {
-    navigate('/dashboard', { replace: true });
+  const onSubmit = async (formInput) => {
+    loginUser({variables:formInput}).then(({data}) => {
+      console.log(data)
+      localStorage.setItem(AUTH_TOKEN, data.login.token);
+    
+      navigate('/dashboard/app', { replace: true });
+    });
+    
   };
-
+    
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>
@@ -62,6 +72,8 @@ export default function LoginForm() {
             ),
           }}
         />
+
+
       </Stack>
 
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
