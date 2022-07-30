@@ -2,6 +2,8 @@ import { faker } from '@faker-js/faker';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
+import { useQuery } from '@apollo/client';
+import { TOTAL_USERS_QUERY } from '../graphql';
 // components
 import Page from '../components/Page';
 import Iconify from '../components/Iconify';
@@ -18,10 +20,14 @@ import {
   AppConversionRates,
 } from '../sections/@dashboard/app';
 
+
+
 // ----------------------------------------------------------------------
 
 export default function DashboardApp() {
   const theme = useTheme();
+  const { loading, error, data } = useQuery(TOTAL_USERS_QUERY);
+  console.log(data);
 
   return (
     <Page title="Dashboard">

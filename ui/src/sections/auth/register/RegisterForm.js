@@ -6,10 +6,16 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { Stack, IconButton, InputAdornment } from '@mui/material';
+import { useMutation } from '@apollo/client';
 import { LoadingButton } from '@mui/lab';
+import {REGISTER_USER_MUTATION} from '../../../graphql';
+
+
 // components
 import Iconify from '../../../components/Iconify';
 import { FormProvider, RHFTextField } from '../../../components/hook-form';
+import { AUTH_TOKEN } from '../../../constant';
+
 
 // ----------------------------------------------------------------------
 
@@ -17,10 +23,11 @@ export default function RegisterForm() {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
-
+  const [registerUser] = useMutation(REGISTER_USER_MUTATION);
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string().required('First name required'),
     lastName: Yup.string().required('Last name required'),
+    phoneNo: Yup.string().required('Phone number required'),
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
   });
@@ -28,6 +35,7 @@ export default function RegisterForm() {
   const defaultValues = {
     firstName: '',
     lastName: '',
+    phoneNo: '',
     email: '',
     password: '',
   };
@@ -42,8 +50,14 @@ export default function RegisterForm() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = async () => {
-    navigate('/dashboard', { replace: true });
+  const onSubmit = async (formInput) => {
+
+    registerUser({variables:formInput}).then(({data}) => {
+      localStorage.setItem(AUTH_TOKEN, data.registerUser.token);
+    
+      navigate('/dashboard/app', { replace: true });
+    });
+  
   };
 
   return (
@@ -53,6 +67,8 @@ export default function RegisterForm() {
           <RHFTextField name="firstName" label="First name" />
           <RHFTextField name="lastName" label="Last name" />
         </Stack>
+
+        <RHFTextField name="phoneNo" label="Phone Number" />
 
         <RHFTextField name="email" label="Email address" />
 

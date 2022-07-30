@@ -18,7 +18,7 @@ function main(db) {
         allowNull: false,
       },
       phoneNo: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
         allowNull: false,
         unique: true,
       },
