@@ -3,7 +3,8 @@ import { faker } from '@faker-js/faker';
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 import { useQuery } from '@apollo/client';
-import { TOTAL_USERS_QUERY } from '../graphql';
+import { CURRENT_USER_QUERY} from '../graphql';
+
 // components
 import Page from '../components/Page';
 import Iconify from '../components/Iconify';
@@ -26,7 +27,8 @@ import {
 
 export default function DashboardApp() {
   const theme = useTheme();
-  const { loading, error, data } = useQuery(TOTAL_USERS_QUERY);
+  
+  const { loading, error, data } = useQuery(CURRENT_USER_QUERY);
   console.log(data);
 
   return (

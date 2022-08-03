@@ -13,7 +13,8 @@ type AuthPayload {
   }
 
 type Query {
-        totalUsers:Int!
+    totalUsers:Int!,
+    me: User!
 }
 
 type Mutation {
