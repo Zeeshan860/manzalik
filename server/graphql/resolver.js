@@ -8,7 +8,13 @@ const resolvers = {
       const count = await db.User.count();
       return count;
     },
+    me: async (parent, args, context, info, ) => {
+      const user = context.user;
+      
+      return  user;
+    },
   },
+
   Mutation: {
     registerUser: async (parent, args, context, info) => {
       try {
@@ -59,7 +65,7 @@ const resolvers = {
       } catch (error) {
         throw new Error(error.message);
       }
-    }
+    },
   },
 };
 module.exports = resolvers;
