@@ -13,34 +13,13 @@ const navConfig = [
   },
   {
     title: 'Home',
-    path: '/dashboard/products',
+    path: '/dashboard/home',
     icon: getIcon('eva:shopping-bag-fill'),
   },
   {
     title: 'Personal Houses',
-    path: '/dashboard/user',
-    icon: getIcon('eva:home-outline'),
-  },
-  
-  {
-    title: 'blog',
-    path: '/dashboard/blog',
-    icon: getIcon('eva:file-text-fill'),
-  },
-  {
-    title: 'login',
-    path: '/login',
-    icon: getIcon('eva:lock-fill'),
-  },
-  {
-    title: 'register',
-    path: '/register',
-    icon: getIcon('eva:person-add-fill'),
-  },
-  {
-    title: 'Not found',
-    path: '/404',
-    icon: getIcon('eva:alert-triangle-fill'),
+    path: '/dashboard/personal-houses',
+    icon: getIcon('mdi:home-group'),
   },
 ];
 
