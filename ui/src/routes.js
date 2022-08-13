@@ -22,7 +22,7 @@ export default function Router() {
         { path: 'app', element: <DashboardApp /> },
         { path: 'personal-houses', element: <User /> },
         { path: 'home', element: <Products /> },
-        // { path: 'blog', element: <Blog /> },
+        { path: 'blog', element: <Blog /> },
       ],
     },
     {

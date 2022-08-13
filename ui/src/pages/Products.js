@@ -7,6 +7,7 @@ import { ProductSort, ProductList, ProductCartWidget, ProductFilterSidebar } fro
 // mock
 import PRODUCTS from '../_mock/products';
 
+
 // ----------------------------------------------------------------------
 
 export default function EcommerceShop() {
@@ -39,7 +40,10 @@ export default function EcommerceShop() {
         </Stack>
 
         <ProductList products={PRODUCTS} />
-        <ProductCartWidget />
+      
+        
+        {/* <ProductCartWidget /> */}
+        
       </Container>
     </Page>
   );
