@@ -34,7 +34,7 @@ const MENU_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
-export default function AccountPopover() {
+export default function AccountPopover({currentUser}) {
   const navigate = useNavigate();
 
   const anchorRef = useRef(null);
@@ -93,10 +93,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {account.displayName}
+            {currentUser?.firstName} {currentUser?.lastName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {currentUser?.email}
           </Typography>
         </Box>
 

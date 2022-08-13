@@ -3,7 +3,7 @@ type User{
     id: ID!
     firstName:String!
     lastName: String!
-    phoneNo: Int!
+    phoneNo: String!
     email: String!  
 }
 
