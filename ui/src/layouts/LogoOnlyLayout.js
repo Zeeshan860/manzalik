@@ -1,9 +1,10 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet,useNavigate } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 // material
 import { styled } from '@mui/material/styles';
 // components
 import Logo from '../components/Logo';
-
+import { CURRENT_USER_QUERY } from '../graphql';
 // ----------------------------------------------------------------------
 
 const HeaderStyle = styled('header')(({ theme }) => ({
@@ -21,6 +22,15 @@ const HeaderStyle = styled('header')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function LogoOnlyLayout() {
+  const navigate = useNavigate();
+  const { loading, error, data } = useQuery(CURRENT_USER_QUERY);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (!loading && (!error || data)) {
+    navigate('/dashboard/app', { replace: true });
+    return null;
+  }
   return (
     <>
       <HeaderStyle>

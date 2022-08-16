@@ -1,40 +1,46 @@
 const Sequelize = require("sequelize");
 
 function main(db) {
-  const User = db.define(
-    "user",
+  const House = db.define(
+    "house",
     {
       id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
       },
-      firstName: {
+      price: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      location: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      lastName: {
+      bedRooms: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      washRooms: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      areaUnit: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      phoneNo: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      email: {
-        type: Sequelize.STRING,
-        unique: true,
-        allowNull: false,
-      },
-      password: {
+      description: {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      userId:{
+        type:Sequelize.UUID,
+        allowNull: false,
+      }
     },
-    { tableName: "user" }
+    { tableName: "house" }
   );
-  return User;
+  return House;
 }
 
 module.exports = main;

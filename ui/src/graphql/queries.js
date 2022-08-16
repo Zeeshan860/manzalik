@@ -5,3 +5,14 @@ export const TOTAL_USERS_QUERY = gql`
     totalUsers
   }
 `;
+export const CURRENT_USER_QUERY = gql`
+  query {
+    me {
+    id
+    firstName
+    lastName
+    phoneNo
+    email
+    }
+  }
+`;
