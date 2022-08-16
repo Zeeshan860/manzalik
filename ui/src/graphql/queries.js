@@ -5,3 +5,9 @@ export const TOTAL_USERS_QUERY = gql`
     totalUsers
   }
 `;
+
+export const TOTAL_HOUSE_QUERY = gql`
+  query {
+    totalHouse
+  }
+`;

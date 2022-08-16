@@ -8,7 +8,16 @@ const resolvers = {
       const count = await db.User.count();
       return count;
     },
+  
+     // query for total house
+    totalHouse: async (parent, args, context, info) => {
+      const db = context.db;
+
+      const count = await db.House.count();
+      return count;
+    },
   },
+
   Mutation: {
     registerUser: async (parent, args, context, info) => {
       try {
@@ -59,7 +68,51 @@ const resolvers = {
       } catch (error) {
         throw new Error(error.message);
       }
-    }
+    },
+
+    // enter new house
+    newHouse: async (parent, args, context, info) => {
+      try {
+        const db = context.db;
+        const {
+          area,
+          bedRooms,
+          kitchens,
+          washRooms,
+          noOfStoreys,
+          rentalPrice,
+          location,
+          description,
+          province,
+          city,
+          furnished,
+        } = args;
+        const house = await db.House.create({
+          area,
+          bedRooms,
+          kitchens,
+          washRooms,
+          noOfStoreys,
+          rentalPrice,
+          location,
+          description,
+          province,
+          city,
+          furnished,
+        });
+        const token = jwt.sign(
+          { id: house.id },
+          process.env.JWT_SECRET,
+          { expiresIn: "1d" }
+        );
+        return {
+          token,
+         house,
+        };
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    },
   },
 };
 module.exports = resolvers;

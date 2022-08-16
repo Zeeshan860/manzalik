@@ -1,6 +1,7 @@
 const { Sequelize } = require("sequelize");
 
 const getUser = require("./user");
+const getHouse = require("./house");
 function main() {
   const sequelize = new Sequelize(
     process.env.DB_NAME,
@@ -27,6 +28,7 @@ function main() {
     .then(() => console.log("Database connected..."))
     .catch((err) => console.log("Error:" + err));
   db.User = getUser(sequelize);
+  db.House = getHouse(sequelize);
   sequelize.sync();
   return db;
 }

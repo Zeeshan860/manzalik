@@ -7,13 +7,30 @@ type User{
     email: String!  
 }
 
+type House{
+    id: ID!
+    area:String!
+    bedRooms: Int!
+    kitchens: Int!
+    washRooms: Int!
+    noOfStoreys:String!
+    rentalPrice:Int!
+    location:String!
+    description:String!
+    province:String!
+    city:String!
+    furnished:Boolean!
+}
+
 type AuthPayload {
     token: String!
     user: User!
+    house: House!
   }
 
 type Query {
         totalUsers:Int!
+        totalHouse:Int!
 }
 
 type Mutation {
@@ -26,10 +43,22 @@ type Mutation {
     login(
         email:String!,
         password: String!):AuthPayload!
+
+
+       newHouse ( 
+        area:String!,
+        bedRooms: Int!,
+        kitchens: Int!,
+        washRooms: Int!,
+        noOfStoreys:String!,
+        rentalPrice:Int!,
+        location:String!,
+        description:String!,
+        province:String!,
+        city:String!,
+        furnished:Boolean!):AuthPayload!
     
 }
-
-
 
  `;
 module.exports = typeDefs;
