@@ -1,7 +1,8 @@
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
 import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom'; 
+
 // material
 import {
   Card,
@@ -17,6 +18,7 @@ import {
   Typography,
   TableContainer,
   TablePagination,
+  // Popup,
 } from '@mui/material';
 // components
 import Page from '../components/Page';
@@ -27,6 +29,7 @@ import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../sections/@dashboard/user';
 // mock
 import USERLIST from '../_mock/user';
+import NewHouseForm from '../components/newhouse';
 
 // ----------------------------------------------------------------------
 
@@ -83,6 +86,17 @@ export default function User() {
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  const [open, setOpen] = useState(false);
+
+  // const handleOpen = () => {
+  //   setOpen(true);
+  // };
+  //   console.log(open)
+
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -134,17 +148,26 @@ export default function User() {
 
   return (
     <Page title="Personal Houses">
+    
+      <NewHouseForm
+      open = {open} 
+      setOpen = {setOpen}
+      />
+   
+   
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
             Personal Houses
           </Typography>
-          <Button variant="contained" component={RouterLink} to="#" startIcon={<Iconify icon="eva:plus-fill" />}>
+          <Button variant="contained"  onClick ={()=>{
+            console.log("here")
+            setOpen(true);}}  startIcon={<Iconify icon="eva:plus-fill" />}>
             New House
           </Button>
         </Stack>
 
-        <Card>
+        {/* <Card>
           <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
 
           <Scrollbar>
@@ -228,8 +251,14 @@ export default function User() {
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
-        </Card>
+        </Card> */}
+        {/* <Popup>
+      open = {open}
+      setOpen = {setOpen}
+      <NewHouseForm />
+    </Popup> */}
       </Container>
     </Page>
+    
   );
 }
