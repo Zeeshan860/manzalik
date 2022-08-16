@@ -81,11 +81,8 @@ export default function  NewHouseForm({open,setOpen}){
 
   const onSubmit = async (formInput) => {
 
-    newHouse({variables:formInput}).then(({data}) => {
-      localStorage.setItem(AUTH_TOKEN, data.newHouse.token);
+    newHouse({variables:formInput})
     
-      navigate('/dashboard/app', { replace: true });
-    });
   
   };
 

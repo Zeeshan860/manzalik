@@ -25,7 +25,6 @@ type House{
 type AuthPayload {
     token: String!
     user: User!
-    house: House!
   }
 
 type Query {
@@ -56,7 +55,7 @@ type Mutation {
         description:String!,
         province:String!,
         city:String!,
-        furnished:Boolean!):AuthPayload!
+        furnished:Boolean!):House
     
 }
 

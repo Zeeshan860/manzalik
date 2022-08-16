@@ -100,15 +100,8 @@ const resolvers = {
           city,
           furnished,
         });
-        const token = jwt.sign(
-          { id: house.id },
-          process.env.JWT_SECRET,
-          { expiresIn: "1d" }
-        );
-        return {
-          token,
-         house,
-        };
+        
+        return house;
       } catch (error) {
         throw new Error(error.message);
       }
