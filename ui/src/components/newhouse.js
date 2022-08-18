@@ -13,6 +13,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { useMutation } from '@apollo/client';
 import {NEW_HOUSE_MUTATION} from '../graphql';
+import { FormProvider, RHFTextField } from './hook-form';
 
 // components
 import { AUTH_TOKEN } from '../constant';
@@ -37,36 +38,35 @@ const style = {
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 export default function  NewHouseForm({open,setOpen}){
-  const navigate = useNavigate();
 
   const [newHouse] = useMutation(NEW_HOUSE_MUTATION);
   const HouseSchema = Yup.object().shape({
 
       area: Yup.string().required('Area required'),
-      bedRooms: Yup.number().required('Bedrooms required'),
-      kitchens: Yup.number().required('Kitchens required'),
-      washRooms: Yup.number().required('Washrooms required'),
-      noOfStoreys: Yup.string().required('NoOfStoreys required'),
-      retalPrice: Yup.number().required('RentalPrice required'),
-      location: Yup.string().required('Location required'),
-      description: Yup.string().required('Description required'),
-      province: Yup.string().required('Province required'),
-      city: Yup.string().required('City required'),
-      furnished: Yup.boolean().required('required'),
+      // bedRooms: Yup.number().required('Bedrooms required'),
+      // kitchens: Yup.number().required('Kitchens required'),
+      // washRooms: Yup.number().required('Washrooms required'),
+      // noOfStoreys: Yup.string().required('NoOfStoreys required'),
+      // retalPrice: Yup.number().required('RentalPrice required'),
+      // location: Yup.string().required('Location required'),
+      // description: Yup.string().required('Description required'),
+      // province: Yup.string().required('Province required'),
+      // city: Yup.string().required('City required'),
+      // furnished: Yup.boolean().required('required'),
   });
 
   const defaultValues = {
     area: '',
-    bedRooms: '',
-    kitchens: '',
-    washRooms: '',
-    noOfStoreys: '',
-    retalPrice:'',
-    location:'',
-    description:'',
-    province: '',
-    city:'',
-    furnished:'',
+    // bedRooms: '',
+    // kitchens: '',
+    // washRooms: '',
+    // noOfStoreys: '',
+    // retalPrice:'',
+    // location:'',
+    // description:'',
+    // province: '',
+    // city:'',
+    // furnished:'',
   };
 
   const methods = useForm({
@@ -110,16 +110,17 @@ export default function  NewHouseForm({open,setOpen}){
 
 return(
   
-<Modal   methods={methods} onSubmit={handleSubmit(onSubmit)}
+<Modal
   open={open}
   onClose={handleClose}
   aria-labelledby="modal-modal-title"
   aria-describedby="modal-modal-description"
 >
+  <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
   <Box sx={style}>
-
+   
    <Stack spacing={2} direction="row"sx={{ mt: 2 }}>
-   <TextField  type={"string"} id="outlined-basic" label="Area(Marla)" variant="outlined"/>
+   <RHFTextField  name="area" label="Area(Marla)"/>
    <TextField  type={"number"} id="outlined-basic" label="Bed Rooms" variant="outlined" />
     </Stack>
    
@@ -191,11 +192,11 @@ return(
    <Stack direction="row"sx={{ mt: 2 }}>
       <Button  variant="outlined" style={{marginLeft:'180px',marginRight:'20px'}}>Cancel</Button>
       {/* <Button type="submit" variant="contained" loading={isSubmitting}>Create</Button> */}
-      <LoadingButton variant="contained" loading={isSubmitting}>Create</LoadingButton>
+      <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>Create</LoadingButton>
     </Stack>
-  
-
   </Box>
+  
+ </FormProvider>
 </Modal>
 );
 }
