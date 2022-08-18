@@ -20,8 +20,8 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { path: 'app', element: <DashboardApp /> },
-        { path: 'user', element: <User /> },
-        { path: 'products', element: <Products /> },
+        { path: 'personal-houses', element: <User /> },
+        { path: 'home', element: <Products /> },
         { path: 'blog', element: <Blog /> },
       ],
     },

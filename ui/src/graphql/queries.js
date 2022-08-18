@@ -11,3 +11,14 @@ export const TOTAL_HOUSE_QUERY = gql`
     totalHouse
   }
 `;
+export const CURRENT_USER_QUERY = gql`
+  query {
+    me {
+    id
+    firstName
+    lastName
+    phoneNo
+    email
+    }
+  }
+`;

@@ -20,7 +20,7 @@ function main() {
         acquire: 30000,
         idle: 10000,
       },
-    }
+    }    
   );
   const db = { sequelize };
   sequelize
@@ -29,7 +29,9 @@ function main() {
     .catch((err) => console.log("Error:" + err));
   db.User = getUser(sequelize);
   db.House = getHouse(sequelize);
-  sequelize.sync();
+  db.User.hasMany(db.House, { sourceKey: 'id', foreignKey: 'userId' });
+
+  sequelize.sync({force:true});
   return db;
 }
 

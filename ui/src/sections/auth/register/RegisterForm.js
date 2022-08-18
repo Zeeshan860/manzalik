@@ -21,13 +21,13 @@ import { AUTH_TOKEN } from '../../../constant';
 
 export default function RegisterForm() {
   const navigate = useNavigate();
-
+  const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
   const [showPassword, setShowPassword] = useState(false);
   const [registerUser] = useMutation(REGISTER_USER_MUTATION);
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string().required('First name required'),
     lastName: Yup.string().required('Last name required'),
-    phoneNo: Yup.string().required('Phone number required'),
+    phoneNo: Yup.string().matches(phoneRegExp, 'Phone number is not valid').required('Phone number required'),
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
   });

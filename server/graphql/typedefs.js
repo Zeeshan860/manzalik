@@ -3,7 +3,7 @@ type User{
     id: ID!
     firstName:String!
     lastName: String!
-    phoneNo: Int!
+    phoneNo: String!
     email: String!  
 }
 
@@ -28,8 +28,9 @@ type AuthPayload {
   }
 
 type Query {
-        totalUsers:Int!
-        totalHouse:Int!
+    totalUsers:Int!
+    totalHouse:Int!
+    me: User!
 }
 
 type Mutation {

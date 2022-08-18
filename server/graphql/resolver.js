@@ -16,6 +16,11 @@ const resolvers = {
       const count = await db.House.count();
       return count;
     },
+    me: async (parent, args, context, info, ) => {
+      const user = context.user;
+      
+      return  user;
+    },
   },
 
   Mutation: {
