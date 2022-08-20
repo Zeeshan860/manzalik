@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, TextField, Button } from '@mui/material';
 
 // components
-
+import {useUser} from '../layouts/dashboard'
 import Page from '../components/Page';
 
 import ChangePassword from './Setting';
@@ -11,6 +11,7 @@ import ChangePassword from './Setting';
 import account from '../_mock/account';
 
 export default function Profile({currentUser}) {
+  const {user} = useUser()
   const [open, setOpen] = useState(false);
   return (
     <Page title="Profile">
@@ -28,7 +29,7 @@ export default function Profile({currentUser}) {
             <TextField
           disabled
           id="filled-disabled"
-          value= {currentUser?.firstName}
+          value= {user?.firstName}
           variant="outlined"
         />
             </Stack>
@@ -41,7 +42,7 @@ export default function Profile({currentUser}) {
             <TextField
           disabled
           id="filled-disabled"
-          defaultValue="Asrat Abbasi"
+          value= {user?.lastName}
           variant="outlined"
         />
             </Stack>
@@ -55,7 +56,7 @@ export default function Profile({currentUser}) {
             <TextField
           disabled
           id="filled-disabled"
-          defaultValue="03165038814"
+          value= {user?.phoneNo}
           variant="outlined"
         />
             </Stack>
@@ -71,7 +72,7 @@ export default function Profile({currentUser}) {
           
           disabled
           id="filled-disabled"
-          defaultValue="eman@gmail.com"
+          value= {user?.email}
           variant="outlined"
         />
           
