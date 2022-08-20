@@ -8,6 +8,14 @@ const resolvers = {
       const count = await db.User.count();
       return count;
     },
+  
+     // query for total house
+    totalHouse: async (parent, args, context, info) => {
+      const db = context.db;
+
+      const count = await db.House.count();
+      return count;
+    },
     me: async (parent, args, context, info, ) => {
       const user = context.user;
       
@@ -66,29 +74,64 @@ const resolvers = {
         throw new Error(error.message);
       }
     },
-
-    changePassword: async (parent, args, context, info) => {
+    resetPassword: async (parent, args, context, info) => {
       try {
-        const db = context.db;
-        const { email, password } = args;
-        const user = await db.User.findOne({ where: { email } });
+        const user = context.user;
         if (!user) {
-          throw new Error("No user with that email");
+          throw new Error("Unauthorized")
         }
-        const isValid = await bcrypt.compare(password, user.password);
+        const isValid = await bcrypt.compare(args.oldPassword, user.password);
         if (!isValid) {
           throw new Error("Incorrect password");
         }
-        // return jwt
-        const token = jwt.sign(
-          { id: user.id, email: user.email },
-          process.env.JWT_SECRET,
-          { expiresIn: "1d" }
-        );
-        return {
-          token,
-          user,
-        };
+        await db.User.update({
+          password: await bcrypt.hash(args.newPassword, 10)
+        },{
+          where: {id: user.id}
+        })
+        return "success";
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    },
+
+    // enter new house
+    newHouse: async (parent, args, context, info) => {
+      try {
+        const user = context.user;
+        if (!user) {
+          throw new Error("Unauthorized")
+        }
+        const db = context.db;
+        const {
+          area,
+          bedRooms,
+          kitchens,
+          washRooms,
+          noOfStoreys,
+          rentalPrice,
+          location,
+          description,
+          province,
+          city,
+          furnished,
+        } = args;
+        const house = await db.House.create({
+          area,
+          bedRooms,
+          kitchens,
+          washRooms,
+          noOfStoreys,
+          rentalPrice,
+          location,
+          description,
+          province,
+          city,
+          furnished,
+          userId: user.id
+        });
+        
+        return house;
       } catch (error) {
         throw new Error(error.message);
       }

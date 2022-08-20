@@ -1,8 +1,7 @@
 const { Sequelize } = require("sequelize");
 
 const getUser = require("./user");
-const getHouse= require("./house");
-
+const getHouse = require("./house");
 function main() {
   const sequelize = new Sequelize(
     process.env.DB_NAME,
@@ -32,7 +31,7 @@ function main() {
   db.House = getHouse(sequelize);
   db.User.hasMany(db.House, { sourceKey: 'id', foreignKey: 'userId' });
 
-  sequelize.sync({force:true});
+  sequelize.sync();
   return db;
 }
 

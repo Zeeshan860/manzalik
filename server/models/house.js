@@ -9,11 +9,7 @@ function main(db) {
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
       },
-      price: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      location: {
+      area: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -21,16 +17,40 @@ function main(db) {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      kitchens: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       washRooms: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      areaUnit: {
+      noOfStoreys: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      rentalPrice: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      location: {
         type: Sequelize.STRING,
         allowNull: false,
       },
       description: {
         type: Sequelize.STRING,
+        allowNull: false,
+      },
+      province: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      city: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      furnished: {
+        type: Sequelize.BOOLEAN,
         allowNull: false,
       },
       userId:{

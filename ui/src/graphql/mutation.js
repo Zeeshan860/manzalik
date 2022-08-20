@@ -36,3 +36,24 @@ export const CHANGE_PASSWORD_MUTATION = gql`
     }
   }
 `;
+
+export const NEW_HOUSE_MUTATION = gql`
+  mutation newHouseMutation(
+    $area:String!,
+    $bedRooms: Int!,
+    $kitchens: Int!,
+    $washRooms: Int!,
+    $noOfStoreys:String!,
+    $rentalPrice:Int!,
+    $location:String!,
+    $description:String!,
+    $province:String!,
+    $city:String!,
+    $furnished:Boolean!
+  ) {
+    newHouse(area: $area, bedRooms:$bedRooms, kitchens: $kitchens, washRooms:$washRooms,
+      noOfStoreys:$noOfStoreys, rentalPrice:$rentalPrice, location:$location,  description:$description,
+      province:$province,  city: $city, furnished:$furnished ) {
+      area
+    }
+    }`;

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useOutletContext  } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 // material
 import { styled } from '@mui/material/styles';
@@ -49,8 +49,12 @@ export default function DashboardLayout() {
       <DashboardNavbar onOpenSidebar={() => setOpen(true)} currentUser={data?.me}/>
       <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} currentUser={data?.me} />
       <MainStyle>
-        <Outlet />
+        <Outlet context={{ user: data?.me }}/>
       </MainStyle>
     </RootStyle>
   );
+}
+
+export function useUser() {
+  return useOutletContext();
 }

@@ -1,7 +1,6 @@
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
 import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom'; 
 
 // material
 import {
@@ -167,7 +166,7 @@ export default function User() {
           </Button>
         </Stack>
 
-        {/* <Card>
+        <Card>
           <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
 
           <Scrollbar>
@@ -251,12 +250,8 @@ export default function User() {
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
-        </Card> */}
-        {/* <Popup>
-      open = {open}
-      setOpen = {setOpen}
-      <NewHouseForm />
-    </Popup> */}
+        </Card>
+    
       </Container>
     </Page>
     
