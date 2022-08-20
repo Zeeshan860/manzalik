@@ -24,7 +24,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { useMutation } from '@apollo/client';
 import { NEW_HOUSE_MUTATION } from '../graphql';
-import { FormProvider, RHFTextField,RHFTextArea,RHFCheckbox, RHFSelect} from './hook-form';
+import { FormProvider, RHFTextField, RHFTextArea, RHFCheckbox, RHFSelect } from './hook-form';
 
 // components
 import { AUTH_TOKEN } from '../constant';
@@ -90,27 +90,18 @@ export default function NewHouseForm({ open, setOpen }) {
 
   const onSubmit = async (formInput) => {
     newHouse({ variables: formInput });
+    handleClose()
   };
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const [provinceId, setProvinceId] = useState('');
   const [city, setCity] = useState([]);
-  const [cityId, setCityId] = useState('');
 
   const handleProvince = (e) => {
-    const getprovinceId = e.target.value;
-    const getCitydata = Data.find((province) => province.provinceid === getprovinceId).cities;
+    const getCitydata = Data.find((province) => province.provincename === e.target.value).cities;
     setCity(getCitydata);
-    setProvinceId(getprovinceId);
-    // console.log(getcountryId);
-  };
-  const handleCity = (e) => {
-    const cityId = e.target.value;
-    // console.log(stateid);
-    setCityId(cityId);
   };
 
   return (
@@ -124,17 +115,17 @@ export default function NewHouseForm({ open, setOpen }) {
         <Box sx={style}>
           <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
             <RHFTextField name="area" label="Area(Marla)" />
-            <RHFTextField type ="number" label="Bed Rooms" name="bedRooms" />
+            <RHFTextField type="number" label="Bed Rooms" name="bedRooms" />
           </Stack>
 
           <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
-            <RHFTextField type ="number" label="Kitchens" name="kitchens" />
-            <RHFTextField type ="number" label="Wash Rooms" name="washRooms" />
+            <RHFTextField type="number" label="Kitchens" name="kitchens" />
+            <RHFTextField type="number" label="Wash Rooms" name="washRooms" />
           </Stack>
 
           <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
             <RHFTextField label="No of Storeys" name="noOfStoreys" />
-            <RHFTextField type ="number" label="Rental Price" name="rentalPrice" />
+            <RHFTextField type="number" label="Rental Price" name="rentalPrice" />
           </Stack>
 
           <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
@@ -143,42 +134,39 @@ export default function NewHouseForm({ open, setOpen }) {
           </Stack>
 
           <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
-              <RHFSelect
-                name="province"
-                label= "Province"
-                value={provinceId.name}
-                defaultValue=""
-                onChange={(e) => handleProvince(e)}
-              >
-                <MenuItem aria-label="None" value=""  key="None">{" "}</MenuItem>
-                {Data.map((getprovinceId, index) => (
-                  <MenuItem value={getprovinceId.provinceid} key={index}>
-                    {getprovinceId.provincename}
-                  </MenuItem>
-                ))}
-              </RHFSelect>
-        
+            <RHFSelect
+              name="province"
+              label="Province"
+              defaultValue=""
+              // {...useForm.register()}
+              execfunction={(e) => handleProvince(e)}
+            >
+              <MenuItem value="" key="None">{" "}</MenuItem>
+              {Data.map((getprovinceId, index) => (
+                <MenuItem value={getprovinceId.provincename} key={index}>
+                  {getprovinceId.provincename}
+                </MenuItem>
+              ))}
+            </RHFSelect>
 
-              <RHFSelect
-                name="city"
-                label= "City"
-               value={cityId.name}
-                defaultValue=""
-                onChange={(e) => handleCity(e)}
-              >
-                <option aria-label="None" value="" />
-                {city.map((getcity, index) => (
-                  <option value={getcity.cityid} key={index}>
-                    {getcity.cityname}
-                  </option>
-                ))}
-              </RHFSelect>
-          
+            <RHFSelect
+              name="city"
+              label="City"
+              defaultValue=""
+            >
+              <MenuItem value="" key="None">{" "}</MenuItem>
+              {city.map((getcity, index) => (
+                <MenuItem value={getcity.cityname} key={index}>
+                  {getcity.cityname}
+                </MenuItem>
+              ))}
+            </RHFSelect>
+
           </Stack>
 
           <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
             Furnished
-            <RHFCheckbox name= "furnished" defaultChecked />
+            <RHFCheckbox name="furnished" defaultChecked />
           </Stack>
 
           <div style={{ marginLeft: '1px', marginTop: '10px' }}>Upload your house photos</div>
@@ -190,8 +178,7 @@ export default function NewHouseForm({ open, setOpen }) {
           </Stack>
 
           <Stack direction="row" sx={{ mt: 2 }}>
-            <Button style={{ marginLeft: '180px', marginRight: '20px' }}>Cancel</Button>
-            {/* <Button type="submit" variant="contained" loading={isSubmitting}>Create</Button> */}
+            <Button onClick={handleClose} style={{ marginLeft: '180px', marginRight: '20px' }}>Cancel</Button>
             <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
               Create
             </LoadingButton>

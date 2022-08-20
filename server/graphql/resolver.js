@@ -78,6 +78,10 @@ const resolvers = {
     // enter new house
     newHouse: async (parent, args, context, info) => {
       try {
+        const user = context.user;
+        if (!user) {
+          throw new Error("Unauthorized")
+        }
         const db = context.db;
         const {
           area,
@@ -104,6 +108,7 @@ const resolvers = {
           province,
           city,
           furnished,
+          userId: user.id
         });
         
         return house;

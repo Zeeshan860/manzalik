@@ -13,16 +13,24 @@ RHFSelect.propTypes = {
   value: PropTypes.string,
 };
 
-export default function RHFSelect({ name, label, defaultValue,value, children, ...other }) {
+export default function RHFSelect({ name, label, defaultValue, value, execfunction, children, ...other }) {
   const { control } = useFormContext();
   const labelId = `${name}-label`;
   return (
-    <FormControl control={control} style={{ marginLeft: '-2px' }} sx={{ m: 1, minWidth: 120 }}>
+    <FormControl fullWidth>
       <InputLabel id={labelId} >{label}</InputLabel>
       <Controller
         render={({ field, fieldState: { error } }) => (
           <>
-            <Select {...field} label={label} native labelId={labelId} value={value} {...other}>
+            <Select 
+            label={label} 
+            labelId={labelId} 
+            value={value} {...field} {...other}
+            onChange={(e)=> {
+              field.onChange(e)
+              execfunction(e)
+            }}
+            >
               {children}
             </Select>
             <FormHelperText error variant="filled">

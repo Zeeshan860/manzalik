@@ -42,6 +42,6 @@ export const NEW_HOUSE_MUTATION = gql`
     newHouse(area: $area, bedRooms:$bedRooms, kitchens: $kitchens, washRooms:$washRooms,
       noOfStoreys:$noOfStoreys, rentalPrice:$rentalPrice, location:$location,  description:$description,
       province:$province,  city: $city, furnished:$furnished ) {
-      token
+      area
     }
     }`;
