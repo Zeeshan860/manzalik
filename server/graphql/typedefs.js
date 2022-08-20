@@ -38,14 +38,18 @@ type Mutation {
         lastName: String!,
         phoneNo: String!,
         email: String! ,
-        password: String!):AuthPayload!
+        password: String!): AuthPayload!
     
     login(
         email:String!,
-        password: String!):AuthPayload!
+        password: String!): AuthPayload!
+
+    resetPassword(
+        oldPassword: String!,
+        newPassword: String!): User!
 
 
-       newHouse ( 
+    newHouse ( 
         area:String!,
         bedRooms: Int!,
         kitchens: Int!,

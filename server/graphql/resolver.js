@@ -74,6 +74,28 @@ const resolvers = {
         throw new Error(error.message);
       }
     },
+    resetPassword: async (parent, args, context, info) => {
+      try {
+        const user = context.user;
+        if (!user) {
+          throw new Error("Unauthorized")
+        }
+        const isValid = await bcrypt.compare(args.oldPassword, user.password);
+        if (!isValid) {
+          throw new Error("Incorrect password");
+        }
+        await db.User.update({
+          password: await bcrypt.hash(args.newPassword, 10)
+        },{
+          where: {id: user.id}
+        })
+        return {
+          user,
+        };
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    },
 
     // enter new house
     newHouse: async (parent, args, context, info) => {
