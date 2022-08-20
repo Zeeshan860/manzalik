@@ -1,7 +1,18 @@
-import React,{useState} from "react";
-import { Modal,TextareaAutosize,Stack,Button,TextField,Checkbox,InputLabel,
-  Select,Box,FormControl} from '@mui/material/index';
-  import { LoadingButton } from '@mui/lab';
+import React, { useState } from 'react';
+import {
+  Modal,
+  TextareaAutosize,
+  Stack,
+  Button,
+  TextField,
+  Checkbox,
+  InputLabel,
+  Select,
+  Box,
+  FormControl,
+  MenuItem,
+} from '@mui/material/index';
+import { LoadingButton } from '@mui/lab';
 
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
@@ -12,8 +23,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 // @mui
 import { useMutation } from '@apollo/client';
-import {NEW_HOUSE_MUTATION} from '../graphql';
-import { FormProvider, RHFTextField } from './hook-form';
+import { NEW_HOUSE_MUTATION } from '../graphql';
+import { FormProvider, RHFTextField,RHFTextArea,RHFCheckbox, RHFSelect} from './hook-form';
 
 // components
 import { AUTH_TOKEN } from '../constant';
@@ -37,36 +48,34 @@ const style = {
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
-export default function  NewHouseForm({open,setOpen}){
-
+export default function NewHouseForm({ open, setOpen }) {
   const [newHouse] = useMutation(NEW_HOUSE_MUTATION);
   const HouseSchema = Yup.object().shape({
-
-      area: Yup.string().required('Area required'),
-      // bedRooms: Yup.number().required('Bedrooms required'),
-      // kitchens: Yup.number().required('Kitchens required'),
-      // washRooms: Yup.number().required('Washrooms required'),
-      // noOfStoreys: Yup.string().required('NoOfStoreys required'),
-      // retalPrice: Yup.number().required('RentalPrice required'),
-      // location: Yup.string().required('Location required'),
-      // description: Yup.string().required('Description required'),
-      // province: Yup.string().required('Province required'),
-      // city: Yup.string().required('City required'),
-      // furnished: Yup.boolean().required('required'),
+    area: Yup.string().required('Area required'),
+    bedRooms: Yup.number().required('Bedrooms required'),
+    kitchens: Yup.number().required('Kitchens required'),
+    washRooms: Yup.number().required('Washrooms required'),
+    noOfStoreys: Yup.string().required('NoOfStoreys required'),
+    rentalPrice: Yup.number().required('RentalPrice required'),
+    location: Yup.string().required('Location required'),
+    description: Yup.string().required('Description required'),
+    province: Yup.string().required('Province required'),
+    city: Yup.string().required('City required'),
+    furnished: Yup.boolean().required('required'),
   });
 
   const defaultValues = {
     area: '',
-    // bedRooms: '',
-    // kitchens: '',
-    // washRooms: '',
-    // noOfStoreys: '',
-    // retalPrice:'',
-    // location:'',
-    // description:'',
-    // province: '',
-    // city:'',
-    // furnished:'',
+    bedRooms: "0",
+    kitchens: "0",
+    washRooms: "0",
+    noOfStoreys: '',
+    rentalPrice: "0",
+    location: '',
+    description: '',
+    province: '',
+    city: '',
+    furnished: true,
   };
 
   const methods = useForm({
@@ -80,123 +89,115 @@ export default function  NewHouseForm({open,setOpen}){
   } = methods;
 
   const onSubmit = async (formInput) => {
-
-    newHouse({variables:formInput})
-    
-  
+    newHouse({ variables: formInput });
   };
 
   const handleClose = () => {
     setOpen(false);
-  }
-   
-  const [provinceId, setProvinceId]= useState('');
-  const [city, setCity]= useState([]);
-  const [cityId, setCityId]= useState('');
+  };
 
-  const handleprovince=(e)=>{
-    const getprovinceId= e.target.value;
-    const getCitydata= Data.find(province=>province.provinceid===getprovinceId).cities;
+  const [provinceId, setProvinceId] = useState('');
+  const [city, setCity] = useState([]);
+  const [cityId, setCityId] = useState('');
+
+  const handleProvince = (e) => {
+    const getprovinceId = e.target.value;
+    const getCitydata = Data.find((province) => province.provinceid === getprovinceId).cities;
     setCity(getCitydata);
     setProvinceId(getprovinceId);
-  // console.log(getcountryId);
-  }
-  const handlecity = (e)=>{
-    const cityId= e.target.value;
+    // console.log(getcountryId);
+  };
+  const handleCity = (e) => {
+    const cityId = e.target.value;
     // console.log(stateid);
     setCityId(cityId);
+  };
 
-  }
+  return (
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+        <Box sx={style}>
+          <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
+            <RHFTextField name="area" label="Area(Marla)" />
+            <RHFTextField type ="number" label="Bed Rooms" name="bedRooms" />
+          </Stack>
 
-return(
-  
-<Modal
-  open={open}
-  onClose={handleClose}
-  aria-labelledby="modal-modal-title"
-  aria-describedby="modal-modal-description"
->
-  <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-  <Box sx={style}>
-   
-   <Stack spacing={2} direction="row"sx={{ mt: 2 }}>
-   <RHFTextField  name="area" label="Area(Marla)"/>
-   <TextField  type={"number"} id="outlined-basic" label="Bed Rooms" variant="outlined" />
-    </Stack>
-   
-   <Stack spacing={2} direction="row"sx={{ mt: 2 }}>
-   <TextField  type={"number"} id="outlined-basic" label="Kitchens" variant="outlined"/>
-   <TextField  type={"number"} id="outlined-basic" label="Wash Rooms" variant="outlined" />
-    </Stack>
+          <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
+            <RHFTextField type ="number" label="Kitchens" name="kitchens" />
+            <RHFTextField type ="number" label="Wash Rooms" name="washRooms" />
+          </Stack>
 
-   <Stack spacing={2} direction="row"sx={{ mt: 2 }}>
-   <TextField type={"string"} id="outlined-basic" label="No of Storeys" variant="outlined"/>
-   <TextField  type={"number"} id="outlined-basic" label="Rental Price" variant="outlined" />
-    </Stack>
+          <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
+            <RHFTextField label="No of Storeys" name="noOfStoreys" />
+            <RHFTextField type ="number" label="Rental Price" name="rentalPrice" />
+          </Stack>
 
-    <Stack spacing={2} direction="row"sx={{ mt: 2 }}>
-    <TextField type={"string"} id="outlined-basic" label="Location" variant="outlined"/>
-  <TextareaAutosize
-      aria-label="empty textarea"
-      minRows={3}
-      placeholder="Enter Description"
-      style={{ width: 200 }}
-    />
-  </Stack>
+          <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
+            <RHFTextField label="Location" name="location" />
+            <RHFTextArea placeholder="Enter Description" name="description" />
+          </Stack>
 
+          <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
+              <RHFSelect
+                name="province"
+                label= "Province"
+                value={provinceId.name}
+                defaultValue=""
+                onChange={(e) => handleProvince(e)}
+              >
+                <MenuItem aria-label="None" value=""  key="None">{" "}</MenuItem>
+                {Data.map((getprovinceId, index) => (
+                  <MenuItem value={getprovinceId.provinceid} key={index}>
+                    {getprovinceId.provincename}
+                  </MenuItem>
+                ))}
+              </RHFSelect>
+        
 
-  <Stack spacing={2} direction="row"sx={{ mt: 2 }}>
-    <FormControl  style={{marginLeft:'-2px'}} sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel htmlFor="grouped-native-select">Province</InputLabel>
-        <Select name='province' native defaultValue="" id="grouped-native-select" label="Grouping"
-       onChange={(e)=>handleprovince(e)}
-        >
-          <option aria-label="None" value="" />
-          {
-                      Data.map( (getprovinceId,index)=>(
-                          <option value={getprovinceId.provinceid} key={index}>{getprovinceId.provincename}</option> 
-                        ))
+              <RHFSelect
+                name="city"
+                label= "City"
+               value={cityId.name}
+                defaultValue=""
+                onChange={(e) => handleCity(e)}
+              >
+                <option aria-label="None" value="" />
+                {city.map((getcity, index) => (
+                  <option value={getcity.cityid} key={index}>
+                    {getcity.cityname}
+                  </option>
+                ))}
+              </RHFSelect>
+          
+          </Stack>
 
-                        }
-        </Select>
-      </FormControl>
+          <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
+            Furnished
+            <RHFCheckbox name= "furnished" defaultChecked />
+          </Stack>
 
-      <FormControl  style={{marginTop:'6px',marginLeft:'50px'}} sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel htmlFor="grouped-select">City</InputLabel>
-        <Select name='city' native defaultValue="" id="grouped-select" label="Grouping"
-        onChange={(e)=>handlecity(e)}
-        >
-          <option aria-label="None" value="" />
-          {
-                          city.map((getcity, index)=>(
-                            <option value={getcity.cityid} key={index}>{ getcity.cityname }</option>
-                          ))
-                        }
-        </Select>
-      </FormControl>
+          <div style={{ marginLeft: '1px', marginTop: '10px' }}>Upload your house photos</div>
+          <Stack spacing={2} direction="row" sx={{ mt: 2 }} alignItems="center">
+            <Button component="label">
+              UPLOAD
+              <input hidden accept="image/*" multiple type="file" />
+            </Button>
+          </Stack>
 
-    </Stack>
-
-  <Stack  spacing={2} direction="row" sx={{ mt: 2 }}>
- Furnished<Checkbox style={{marginTop:'-8px'}} {...label} defaultChecked />
-  </Stack>
-
-  <div style={{marginLeft:'1px',marginTop:'10px'}} >Upload your house photos</div>
-  <Stack spacing={2} direction="row" sx={{ mt: 2 }} alignItems="center">
-  <Button variant="outlined" component="label">
-        UPLOAD
-        <input hidden accept="image/*" multiple type="file" />
-      </Button>
-    </Stack>
-   
-   <Stack direction="row"sx={{ mt: 2 }}>
-      <Button  variant="outlined" style={{marginLeft:'180px',marginRight:'20px'}}>Cancel</Button>
-      {/* <Button type="submit" variant="contained" loading={isSubmitting}>Create</Button> */}
-      <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>Create</LoadingButton>
-    </Stack>
-  </Box>
-  
- </FormProvider>
-</Modal>
-);
+          <Stack direction="row" sx={{ mt: 2 }}>
+            <Button style={{ marginLeft: '180px', marginRight: '20px' }}>Cancel</Button>
+            {/* <Button type="submit" variant="contained" loading={isSubmitting}>Create</Button> */}
+            <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
+              Create
+            </LoadingButton>
+          </Stack>
+        </Box>
+      </FormProvider>
+    </Modal>
+  );
 }
