@@ -24,3 +24,15 @@ export const LOGIN_USER_MUTATION = gql`
     }
   }
 `;
+export const CHANGE_PASSWORD_MUTATION = gql`
+  mutation changePasswordMutation(
+    $oldPassword: String!
+    $newPassword: String!
+    $confirmPassword: String!
+  )
+  {
+    login(oldPassword: $oldPassword, newPassword: $newPassword, confirmPassword: $confirmPassword ) {
+      token
+    }
+  }
+`;

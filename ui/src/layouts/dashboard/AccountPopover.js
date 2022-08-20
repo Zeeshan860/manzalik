@@ -6,6 +6,7 @@ import { alpha } from '@mui/material/styles';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton } from '@mui/material';
 // components
 import MenuPopover from '../../components/MenuPopover';
+
 // mocks_
 import account from '../../_mock/account';
 import { AUTH_TOKEN } from '../../constant';
@@ -15,21 +16,21 @@ import { AUTH_TOKEN } from '../../constant';
 // export const navigate = useNavigate();
 
 const MENU_OPTIONS = [
-  {
-    label: 'Home',
-    icon: 'eva:home-fill',
-    linkTo: '/',
-  },
+  // {
+  //   label: 'Home',
+  //   icon: 'eva:home-fill',
+  //   linkTo: '/',
+  // },
   {
     label: 'Profile',
     icon: 'eva:person-fill',
-    linkTo: '#',
+    linkTo: 'profile',
   },
-  {
-    label: 'Settings',
-    icon: 'eva:settings-2-fill',
-    linkTo: '#',
-  },
+  // {
+  //   label: 'Settings',
+  //   icon: 'eva:settings-2-fill',
+  //   linkTo: '#',
+  // },
 ];
 
 // ----------------------------------------------------------------------
@@ -40,6 +41,10 @@ export default function AccountPopover({currentUser}) {
   const anchorRef = useRef(null);
 
   const [open, setOpen] = useState(null);
+
+  const handleChange = ()=>{
+  
+  };
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -111,7 +116,6 @@ export default function AccountPopover({currentUser}) {
         </Stack>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
-
         <MenuItem onClick={handleLogout} sx={{ m: 1 }}>
           Logout
         </MenuItem>

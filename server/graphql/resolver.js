@@ -66,6 +66,33 @@ const resolvers = {
         throw new Error(error.message);
       }
     },
+
+    changePassword: async (parent, args, context, info) => {
+      try {
+        const db = context.db;
+        const { email, password } = args;
+        const user = await db.User.findOne({ where: { email } });
+        if (!user) {
+          throw new Error("No user with that email");
+        }
+        const isValid = await bcrypt.compare(password, user.password);
+        if (!isValid) {
+          throw new Error("Incorrect password");
+        }
+        // return jwt
+        const token = jwt.sign(
+          { id: user.id, email: user.email },
+          process.env.JWT_SECRET,
+          { expiresIn: "1d" }
+        );
+        return {
+          token,
+          user,
+        };
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    },
   },
 };
 module.exports = resolvers;

@@ -27,7 +27,12 @@ type Mutation {
     login(
         email:String!,
         password: String!):AuthPayload!
-    
+
+    changePassword(
+            oldPassword: String!,
+            newPassword: String!,
+            confirmPassword: String!,):AuthPayload! 
+     
 }
 
 
