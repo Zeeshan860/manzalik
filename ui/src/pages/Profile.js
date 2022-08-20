@@ -87,7 +87,7 @@ export default function Profile({currentUser}) {
               setOpen(true);
             }}
             variant="contained"
-            style={{ marginLeft: '375px', marginRight: '640px' }}
+            style={{ marginLeft: '375px', marginRight: '620px' }}
           >
              Reset Password
           </Button>

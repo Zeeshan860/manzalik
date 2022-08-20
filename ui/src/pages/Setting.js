@@ -19,7 +19,7 @@ export default function ChangePassword({ open, setOpen }) {
   const handleClose = () => {
     setOpen(false);
   };
-
+  
   return (
     <Modal
       open={open}
@@ -40,10 +40,13 @@ export default function ChangePassword({ open, setOpen }) {
         <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
           <TextField type={'string'} id="outlined-basic" label="Confirm Password" variant="outlined" />
         </Stack>
-
         <Stack direction="row" sx={{ mt: 2 }}>
-          <Button variant="contained">Reset</Button>
-        </Stack>
+            <Button onClick={handleClose} style={{ marginLeft: '180px', marginRight: '20px' }}>Cancel</Button>
+            <Button fullWidth size="large" type="submit" variant="contained" >
+              Reset
+            </Button>
+          </Stack>
+        
       </Box>
       
     </Modal>
