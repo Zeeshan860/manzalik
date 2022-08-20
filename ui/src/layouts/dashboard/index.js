@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useOutletContext  } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 // material
 import { styled } from '@mui/material/styles';
@@ -53,4 +53,8 @@ export default function DashboardLayout() {
       </MainStyle>
     </RootStyle>
   );
+}
+
+export function useUser() {
+  return useOutletContext();
 }
