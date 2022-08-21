@@ -1,7 +1,7 @@
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
 import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom'; 
+import { Link as RouterLink } from 'react-router-dom';
 
 // material
 import {
@@ -148,28 +148,26 @@ export default function User() {
 
   return (
     <Page title="Personal Houses">
-    
-      <NewHouseForm
-      open = {open} 
-      setOpen = {setOpen}
-      />
-   
-   
+      <NewHouseForm open={open} setOpen={setOpen} />
+
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
             Personal Houses
           </Typography>
-          <Button variant="contained"  onClick ={()=>{
-            console.log("here")
-            setOpen(true);}}  startIcon={<Iconify icon="eva:plus-fill" />}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              console.log('here');
+
+              setOpen(true);
+            }}
+            startIcon={<Iconify icon="eva:plus-fill" />}
+          >
             New House
           </Button>
         </Stack>
-
-    
       </Container>
     </Page>
-    
   );
 }

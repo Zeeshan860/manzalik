@@ -12,8 +12,8 @@ import {
   FormControl,
   MenuItem,
 } from '@mui/material/index';
-import { LoadingButton } from '@mui/lab';
 
+import { LoadingButton } from '@mui/lab';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,14 +25,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@apollo/client';
 import { NEW_HOUSE_MUTATION } from '../graphql';
 import { FormProvider, RHFTextField, RHFTextArea, RHFCheckbox, RHFSelect } from './hook-form';
-
 // components
 import { AUTH_TOKEN } from '../constant';
 
 import Data from './data.json';
-
-// const URL = 'https://simplemaps.com/data/pk-cities'
-// import style from './SvgIconStyle';
+// import Typography from 'src/theme/overrides/Typography';
 
 const style = {
   position: 'absolute',
@@ -66,11 +63,11 @@ export default function NewHouseForm({ open, setOpen }) {
 
   const defaultValues = {
     area: '',
-    bedRooms: "0",
-    kitchens: "0",
-    washRooms: "0",
+    bedRooms: '0',
+    kitchens: '0',
+    washRooms: '0',
     noOfStoreys: '',
-    rentalPrice: "0",
+    rentalPrice: '0',
     location: '',
     description: '',
     province: '',
@@ -90,7 +87,7 @@ export default function NewHouseForm({ open, setOpen }) {
 
   const onSubmit = async (formInput) => {
     newHouse({ variables: formInput });
-    handleClose()
+    handleClose();
   };
 
   const handleClose = () => {
@@ -113,6 +110,7 @@ export default function NewHouseForm({ open, setOpen }) {
     >
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <Box sx={style}>
+          <Stack>New House</Stack>
           <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
             <RHFTextField name="area" label="Area(Marla)" />
             <RHFTextField type="number" label="Bed Rooms" name="bedRooms" />
@@ -129,11 +127,6 @@ export default function NewHouseForm({ open, setOpen }) {
           </Stack>
 
           <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
-            <RHFTextField label="Location" name="location" />
-            <RHFTextArea placeholder="Enter Description" name="description" />
-          </Stack>
-
-          <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
             <RHFSelect
               name="province"
               label="Province"
@@ -141,7 +134,9 @@ export default function NewHouseForm({ open, setOpen }) {
               // {...useForm.register()}
               execfunction={(e) => handleProvince(e)}
             >
-              <MenuItem value="" key="None">{" "}</MenuItem>
+              <MenuItem value="" key="None">
+                {' '}
+              </MenuItem>
               {Data.map((getprovinceId, index) => (
                 <MenuItem value={getprovinceId.provincename} key={index}>
                   {getprovinceId.provincename}
@@ -149,36 +144,42 @@ export default function NewHouseForm({ open, setOpen }) {
               ))}
             </RHFSelect>
 
-            <RHFSelect
-              name="city"
-              label="City"
-              defaultValue=""
-            >
-              <MenuItem value="" key="None">{" "}</MenuItem>
+            <RHFSelect name="city" label="City" defaultValue="">
+              <MenuItem value="" key="None">
+                {' '}
+              </MenuItem>
               {city.map((getcity, index) => (
                 <MenuItem value={getcity.cityname} key={index}>
                   {getcity.cityname}
                 </MenuItem>
               ))}
             </RHFSelect>
-
           </Stack>
 
           <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
-            Furnished
-            <RHFCheckbox name="furnished" defaultChecked />
+            <RHFTextField label="Location" name="location" />
+          </Stack>
+
+          <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
+            <RHFTextArea placeholder="Enter Description" name="description" />
+          </Stack>
+
+          <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
+            Furnished <RHFCheckbox style={{ marginLeft: '2px', marginTop: '-10px' }} name="furnished" defaultChecked />
           </Stack>
 
           <div style={{ marginLeft: '1px', marginTop: '10px' }}>Upload your house photos</div>
           <Stack spacing={2} direction="row" sx={{ mt: 2 }} alignItems="center">
-            <Button component="label">
+            <Button component="label" variant="outlined">
               UPLOAD
               <input hidden accept="image/*" multiple type="file" />
             </Button>
           </Stack>
 
           <Stack direction="row" sx={{ mt: 2 }}>
-            <Button onClick={handleClose} style={{ marginLeft: '180px', marginRight: '20px' }}>Cancel</Button>
+            <Button onClick={handleClose} variant="outlined" style={{ marginLeft: '180px', marginRight: '20px' }}>
+              Cancel
+            </Button>
             <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
               Create
             </LoadingButton>
