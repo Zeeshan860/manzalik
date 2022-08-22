@@ -47,6 +47,9 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 export default function NewHouseForm({ open, setOpen }) {
   const [newHouse] = useMutation(NEW_HOUSE_MUTATION);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedBase64File, setSelectedBase64File] = useState(null)
+
   const HouseSchema = Yup.object().shape({
     area: Yup.string().required('Area required'),
     bedRooms: Yup.number().required('Bedrooms required'),
@@ -86,12 +89,50 @@ export default function NewHouseForm({ open, setOpen }) {
   } = methods;
 
   const onSubmit = async (formInput) => {
+    formInput.image = selectedBase64File
     newHouse({ variables: formInput });
     handleClose();
   };
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const onFileChange = event => {
+    // Update the 
+    const file = event.target.files[0]
+    getBase64(file)
+      .then(result => {
+        file.base64 = result;
+        console.log("File Is", file);
+        setSelectedFile(file);
+        setSelectedBase64File(result)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  const getBase64 = file => {
+    return new Promise(resolve => {
+      let fileInfo;
+      let baseURL = "";
+      // Make new FileReader
+      const reader = new FileReader();
+
+      // Convert the file to base64 text
+      reader.readAsDataURL(file);
+
+      // on reader load somthing...
+      reader.onload = () => {
+        // Make a fileInfo Object
+        console.log("Called", reader);
+        baseURL = reader.result;
+        console.log(baseURL);
+        resolve(baseURL);
+      };
+      console.log(fileInfo);
+    });
   };
 
   const [city, setCity] = useState([]);
@@ -168,12 +209,13 @@ export default function NewHouseForm({ open, setOpen }) {
             Furnished <RHFCheckbox style={{ marginLeft: '2px', marginTop: '-10px' }} name="furnished" defaultChecked />
           </Stack>
 
-          <div style={{ marginLeft: '1px', marginTop: '10px' }}>Upload your house photos</div>
+          <div style={{ marginLeft: '1px', marginTop: '10px' }}>Upload your house photo</div>
           <Stack spacing={2} direction="row" sx={{ mt: 2 }} alignItems="center">
             <Button component="label" variant="outlined">
               UPLOAD
-              <input hidden accept="image/*" multiple type="file" />
+              <input hidden accept="image/*" type="file" onChange={onFileChange}/>
             </Button>
+            {selectedFile ? selectedFile?.name : 'No file chosen'}
           </Stack>
 
           <Stack direction="row" sx={{ mt: 2 }}>

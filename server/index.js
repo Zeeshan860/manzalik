@@ -40,6 +40,16 @@ async function main() {
   });
 
   const app = express();
+  
+  app.use(bodyParser.json({
+    limit: '50mb'
+  }));
+  
+  app.use(bodyParser.urlencoded({
+    limit: '50mb',
+    parameterLimit: 100000,
+    extended: true 
+  }));
   await apolloServer.start();
   apolloServer.applyMiddleware({ app });
 

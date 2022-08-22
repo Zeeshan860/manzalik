@@ -89,9 +89,7 @@ const resolvers = {
         },{
           where: {id: user.id}
         })
-        return {
-          user,
-        };
+        return "success";
       } catch (error) {
         throw new Error(error.message);
       }
@@ -117,7 +115,10 @@ const resolvers = {
           province,
           city,
           furnished,
+          image,
         } = args;
+
+
         const house = await db.House.create({
           area,
           bedRooms,
@@ -130,7 +131,8 @@ const resolvers = {
           province,
           city,
           furnished,
-          userId: user.id
+          userId: user.id,
+          image: image
         });
         
         return house;

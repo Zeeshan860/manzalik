@@ -20,6 +20,7 @@ type House{
     province:String!
     city:String!
     furnished:Boolean!
+    image:String
 }
 
 type AuthPayload {
@@ -46,7 +47,7 @@ type Mutation {
 
     resetPassword(
         oldPassword: String!,
-        newPassword: String!): User!
+        newPassword: String!): String!
 
 
     newHouse ( 
@@ -60,7 +61,9 @@ type Mutation {
         description:String!,
         province:String!,
         city:String!,
-        furnished:Boolean!):House
+        furnished:Boolean!,
+        image:String
+        ):House
     
 }
 

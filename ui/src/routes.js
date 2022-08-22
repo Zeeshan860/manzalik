@@ -10,6 +10,7 @@ import NotFound from './pages/Page404';
 import Register from './pages/Register';
 import Products from './pages/Products';
 import DashboardApp from './pages/DashboardApp';
+import Profile from './pages/Profile';
 
 // ----------------------------------------------------------------------
 
@@ -23,6 +24,7 @@ export default function Router() {
         { path: 'personal-houses', element: <User /> },
         { path: 'home', element: <Products /> },
         { path: 'blog', element: <Blog /> },
+        { path: 'profile', element: <Profile/> },
       ],
     },
     {
@@ -33,7 +35,9 @@ export default function Router() {
         { path: 'login', element: <Login /> },
         { path: 'register', element: <Register /> },
         { path: '404', element: <NotFound /> },
+    
         { path: '*', element: <Navigate to="/404" /> },
+      
       ],
     },
     { path: '*', element: <Navigate to="/404" replace /> },
