@@ -53,9 +53,12 @@ function main(db) {
         type: Sequelize.BOOLEAN,
         allowNull: false,
       },
-      userId:{
-        type:Sequelize.UUID,
+      userId: {
+        type: Sequelize.UUID,
         allowNull: false,
+      },
+      image: {
+        type: Sequelize.TEXT,
       }
     },
     { tableName: "house" }

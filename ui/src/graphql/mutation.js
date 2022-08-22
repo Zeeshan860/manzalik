@@ -49,11 +49,24 @@ export const NEW_HOUSE_MUTATION = gql`
     $description:String!,
     $province:String!,
     $city:String!,
-    $furnished:Boolean!
+    $furnished:Boolean!,
+    $image:String
   ) {
     newHouse(area: $area, bedRooms:$bedRooms, kitchens: $kitchens, washRooms:$washRooms,
       noOfStoreys:$noOfStoreys, rentalPrice:$rentalPrice, location:$location,  description:$description,
-      province:$province,  city: $city, furnished:$furnished ) {
-      area
+      province:$province,  city: $city, furnished:$furnished, image: $image ) {
+        id
+        area
+        bedRooms
+        kitchens
+        washRooms
+        noOfStoreys
+        rentalPrice
+        location
+        description
+        province
+        city
+        furnished
+        image
     }
     }`;
