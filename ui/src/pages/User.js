@@ -1,7 +1,7 @@
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
 import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 
 // material
 import {
@@ -21,6 +21,7 @@ import {
   // Popup,
 } from '@mui/material';
 // components
+import { PERSONAL_HOUSES_QUERY } from '../graphql';
 import Page from '../components/Page';
 import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
@@ -28,17 +29,19 @@ import Iconify from '../components/Iconify';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../sections/@dashboard/user';
 // mock
-import USERLIST from '../_mock/user';
+import USERLIST from '../_mock/user'; 
 import NewHouseForm from '../components/newhouse';
+
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name', alignRight: false },
-  { id: 'company', label: 'Company', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
-  { id: 'isVerified', label: 'Verified', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
+  { name: 'name', label: 'Name', alignRight: false },
+  { name: 'city', label: 'City', alignRight: false },
+  { name: 'area', label: 'Area', alignRight: false },
+  { name: 'rentalPrice', label: 'Rental Price', alignRight: false },
+  { name: 'furnished', label: 'Furnished', alignRight: false },
+  
   { id: '' },
 ];
 
@@ -87,7 +90,7 @@ export default function User() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const [open, setOpen] = useState(false);
-
+  const { loading, error, data } = useQuery(PERSONAL_HOUSES_QUERY);
   // const handleOpen = () => {
   //   setOpen(true);
   // };
@@ -185,7 +188,7 @@ export default function User() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, status, company, avatarUrl, isVerified } = row;
+                    const { id, name, city, area, avatarUrl, furnished,rentalPrice }= row;
                     const isItemSelected = selected.indexOf(name) !== -1;
 
                     return (
@@ -208,14 +211,13 @@ export default function User() {
                             </Typography>
                           </Stack>
                         </TableCell>
-                        <TableCell align="left">{company}</TableCell>
-                        <TableCell align="left">{role}</TableCell>
-                        <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
-                        <TableCell align="left">
-                          <Label variant="ghost" color={(status === 'banned' && 'error') || 'success'}>
-                            {sentenceCase(status)}
-                          </Label>
-                        </TableCell>
+                        
+                        
+                        <TableCell align="left">{city}</TableCell>
+                        <TableCell align="left">{area}</TableCell>
+                        <TableCell align="left">{rentalPrice}</TableCell>
+                        <TableCell align="left">{furnished? 'Yes' : 'No'}</TableCell>
+                        
 
                         <TableCell align="right">
                           <UserMoreMenu />

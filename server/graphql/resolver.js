@@ -21,6 +21,19 @@ const resolvers = {
       
       return  user;
     },
+    getPersonalHouses:  async (parent, args, context, info ) => {
+      const user = context.user;
+      const db= context.db
+      if (!user) {
+        throw new Error("Unauthorized")
+      }
+      const houses= db.House.findAll(
+        {
+          where: {userId: user.id}
+        }
+      );
+      return  houses;
+    },
   },
 
   Mutation: {
@@ -77,6 +90,7 @@ const resolvers = {
     resetPassword: async (parent, args, context, info) => {
       try {
         const user = context.user;
+        const db= context.db
         if (!user) {
           throw new Error("Unauthorized")
         }

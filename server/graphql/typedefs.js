@@ -32,6 +32,8 @@ type Query {
     totalUsers:Int!
     totalHouse:Int!
     me: User!
+    getPersonalHouses:[House]!
+   
 }
 
 type Mutation {

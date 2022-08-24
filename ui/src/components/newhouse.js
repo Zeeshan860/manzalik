@@ -27,6 +27,7 @@ import { NEW_HOUSE_MUTATION } from '../graphql';
 import { FormProvider, RHFTextField, RHFTextArea, RHFCheckbox, RHFSelect } from './hook-form';
 // components
 import { AUTH_TOKEN } from '../constant';
+import Scrollbar from './Scrollbar';
 
 import Data from './data.json';
 // import Typography from 'src/theme/overrides/Typography';
@@ -149,8 +150,11 @@ export default function NewHouseForm({ open, setOpen }) {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
+    
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      
         <Box sx={style}>
+        <Scrollbar>
           <Stack>New House</Stack>
           <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
             <RHFTextField name="area" label="Area(Marla)" />
@@ -226,8 +230,11 @@ export default function NewHouseForm({ open, setOpen }) {
               Create
             </LoadingButton>
           </Stack>
+          </Scrollbar>
         </Box>
+        
       </FormProvider>
+     
     </Modal>
   );
 }

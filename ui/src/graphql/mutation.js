@@ -25,15 +25,15 @@ export const LOGIN_USER_MUTATION = gql`
   }
 `;
 export const CHANGE_PASSWORD_MUTATION = gql`
-  mutation changePasswordMutation(
+  mutation resetPasswordMutation(
     $oldPassword: String!
     $newPassword: String!
-    $confirmPassword: String!
+
   )
   {
-    login(oldPassword: $oldPassword, newPassword: $newPassword, confirmPassword: $confirmPassword ) {
-      token
-    }
+    resetPassword(oldPassword: $oldPassword, newPassword: $newPassword) 
+      
+    
   }
 `;
 

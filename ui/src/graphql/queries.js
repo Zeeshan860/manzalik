@@ -22,3 +22,24 @@ export const CURRENT_USER_QUERY = gql`
     }
   }
 `;
+export const PERSONAL_HOUSES_QUERY = gql`
+  query {
+    getPersonalHouses {
+      id
+    area
+    bedRooms
+    kitchens
+    washRooms
+    noOfStoreys
+    rentalPrice
+    location
+    description
+    province
+    city
+    furnished
+    image
+      
+    }
+  }
+`;
+
