@@ -1,7 +1,8 @@
-import React from 'react';
+import React,{ useState }  from 'react';
 import * as Yup from 'yup';
 
-import { Modal, Stack, Button, Box } from '@mui/material/index';
+
+import { Modal, Stack, Button, Box , IconButton, InputAdornment} from '@mui/material/index';
 import { LoadingButton } from '@mui/lab';
 // form
 import { useForm } from 'react-hook-form';
@@ -10,6 +11,7 @@ import { useMutation } from '@apollo/client';
 import { CHANGE_PASSWORD_MUTATION } from '../graphql';
 import { FormProvider, RHFTextField, RHFTextArea, RHFCheckbox, RHFSelect } from '../components/hook-form';
 
+import Iconify from '../components/Iconify';
 
 const style = {
   position: 'absolute',
@@ -24,6 +26,7 @@ const style = {
 };
 
 export default function ChangePassword({ open, setOpen }) {
+  const [showPassword, setShowPassword] = useState(false);
   const [resetPassword] = useMutation(CHANGE_PASSWORD_MUTATION);
   const PasswordSchema = Yup.object().shape({
   
@@ -69,13 +72,53 @@ export default function ChangePassword({ open, setOpen }) {
           Change Password
         </Stack>
         <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
-          <RHFTextField type="string" label="Old Password" name="oldPassword"/>
+          
+          <RHFTextField
+          name="oldPassword"
+          label="oldPassword"
+          type={showPassword ? 'text' : 'oldPassword'}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
         </Stack>
         <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
-        <RHFTextField type="string" label="New Password" name="newPassword"/>
+        <RHFTextField
+          name="newPassword"
+          label="newPassword"
+          type={showPassword ? 'text' : 'newPassword'}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
         </Stack>
         <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
-        <RHFTextField type="string" label="Confirm Password" name="confirmPassword"/>
+        <RHFTextField
+          name="confirmPassword"
+          label="confirmPassword"
+          type={showPassword ? 'text' : 'confirmPassword'}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
         </Stack>
         <Stack direction="row" sx={{ mt: 2 }}>
             <Button onClick={handleClose} style={{ marginLeft: '180px', marginRight: '20px' }}>Cancel</Button>

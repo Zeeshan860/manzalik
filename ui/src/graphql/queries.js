@@ -42,4 +42,24 @@ export const PERSONAL_HOUSES_QUERY = gql`
     }
   }
 `;
+export const HOUSES_QUERY = gql`
+  query {
+    getHouses {
+      id
+    area
+    bedRooms
+    kitchens
+    washRooms
+    noOfStoreys
+    rentalPrice
+    location
+    description
+    province
+    city
+    furnished
+    image
+      
+    }
+  }
+`;
 

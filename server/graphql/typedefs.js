@@ -33,6 +33,7 @@ type Query {
     totalHouse:Int!
     me: User!
     getPersonalHouses:[House]!
+    getHouses:[House]!
    
 }
 

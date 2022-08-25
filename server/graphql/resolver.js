@@ -34,6 +34,16 @@ const resolvers = {
       );
       return  houses;
     },
+    getHouses:  async (parent, args, context, info ) => {
+      const user = context.user;
+      const db= context.db
+      if (!user) {
+        throw new Error("Unauthorized")
+      }
+      const houses= db.House.findAll()
+      
+      return  houses;
+    },
   },
 
   Mutation: {
