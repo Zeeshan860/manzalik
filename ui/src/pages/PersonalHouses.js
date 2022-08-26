@@ -1,5 +1,5 @@
 import { filter } from 'lodash';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 
 // material
@@ -29,7 +29,7 @@ import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../sections/@dashboard/user';
 // mock
 import USERLIST from '../_mock/user';
-import NewHouseForm from '../components/newhouse';
+import NewHouseModal from '../components/Newhouse';
 
 // ----------------------------------------------------------------------
 
@@ -75,7 +75,7 @@ function applySortFilter(array, comparator, query) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function User() {
+export default function PersonalHouses() {
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -89,21 +89,20 @@ export default function User() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const [open, setOpen] = useState(false);
-  const { loading, error, data } = useQuery(PERSONAL_HOUSES_QUERY);
-  // const handleOpen = () => {
-  //   setOpen(true);
-  // };
-  //   console.log(open)
-
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
+  const { data, refetch } = useQuery(PERSONAL_HOUSES_QUERY);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
+
+  useEffect(() => {
+    if (!open) {
+      refetch();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -143,14 +142,13 @@ export default function User() {
   };
   const personalHouses = data?.getPersonalHouses || [];
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - personalHouses.length) : 0;
-  console.log(data?.getPersonalHouses);
   const filteredUsers = applySortFilter(personalHouses, getComparator(order, orderBy), filterName);
 
   const isUserNotFound = filteredUsers.length === 0;
 
   return (
     <Page title="Personal Houses">
-      <NewHouseForm open={open} setOpen={setOpen} />
+      <NewHouseModal open={open} setOpen={setOpen} />
 
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>

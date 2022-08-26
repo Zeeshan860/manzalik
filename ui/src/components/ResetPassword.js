@@ -9,9 +9,9 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@apollo/client';
 import { CHANGE_PASSWORD_MUTATION } from '../graphql';
-import { FormProvider, RHFTextField, RHFTextArea, RHFCheckbox, RHFSelect } from '../components/hook-form';
+import { FormProvider, RHFTextField } from './hook-form';
 
-import Iconify from '../components/Iconify';
+import Iconify from './Iconify';
 
 const style = {
   position: 'absolute',
@@ -25,7 +25,7 @@ const style = {
   p: 4,
 };
 
-export default function ChangePassword({ open, setOpen }) {
+export default function ResetPasswordModal({ open, setOpen }) {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -131,7 +131,7 @@ export default function ChangePassword({ open, setOpen }) {
         <Stack direction="row" sx={{ mt: 2 }}>
             <Button onClick={handleClose} style={{ marginLeft: '180px', marginRight: '20px' }}>Cancel</Button>
             <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
-              Reset
+              Save
             </LoadingButton>
           </Stack>
         

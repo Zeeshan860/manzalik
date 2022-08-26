@@ -1,12 +1,12 @@
 import { useState } from 'react';
 // @mui
-import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, TextField, Button } from '@mui/material';
+import { Stack, Avatar, TextField, Button } from '@mui/material';
 
 // components
 import {useUser} from '../layouts/dashboard'
 import Page from '../components/Page';
 
-import ChangePassword from './Setting';
+import ResetPasswordModal from '../components/ResetPassword';
 // mocks_
 import account from '../_mock/account';
 
@@ -15,7 +15,7 @@ export default function Profile({currentUser}) {
   const [open, setOpen] = useState(false);
   return (
     <Page title="Profile">
-      <ChangePassword open={open} setOpen={setOpen} />
+      <ResetPasswordModal open={open} setOpen={setOpen} />
       <Stack>
         <Stack marginLeft={63} marginBottom={30}>
           <Avatar sx={{ width: 140, height: 140 }} src={account.photoURL} alt="photoURL" />

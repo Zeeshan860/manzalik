@@ -1,21 +1,14 @@
 import React, { useState } from 'react';
 import {
   Modal,
-  TextareaAutosize,
   Stack,
   Button,
-  TextField,
-  Checkbox,
-  InputLabel,
-  Select,
   Box,
-  FormControl,
   MenuItem,
 } from '@mui/material/index';
 
 import { LoadingButton } from '@mui/lab';
 import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
 
 // form
 import { useForm } from 'react-hook-form';
@@ -26,7 +19,6 @@ import { useMutation } from '@apollo/client';
 import { NEW_HOUSE_MUTATION } from '../graphql';
 import { FormProvider, RHFTextField, RHFTextArea, RHFCheckbox, RHFSelect } from './hook-form';
 // components
-import { AUTH_TOKEN } from '../constant';
 import Scrollbar from './Scrollbar';
 
 import Data from './data.json';
@@ -42,11 +34,11 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  overflowY: "auto", 
+  maxHeight: "100%"
 };
 
-const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
-export default function NewHouseForm({ open, setOpen }) {
+export default function NewHouseModal({ open, setOpen }) {
   const [newHouse] = useMutation(NEW_HOUSE_MUTATION);
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedBase64File, setSelectedBase64File] = useState(null)
@@ -63,6 +55,7 @@ export default function NewHouseForm({ open, setOpen }) {
     province: Yup.string().required('Province required'),
     city: Yup.string().required('City required'),
     furnished: Yup.boolean().required('required'),
+    reserved: Yup.boolean().required('required'),
   });
 
   const defaultValues = {
@@ -77,6 +70,7 @@ export default function NewHouseForm({ open, setOpen }) {
     province: '',
     city: '',
     furnished: true,
+    reserved: false,
   };
 
   const methods = useForm({
@@ -86,16 +80,20 @@ export default function NewHouseForm({ open, setOpen }) {
 
   const {
     handleSubmit,
+    reset,
     formState: { isSubmitting },
   } = methods;
 
   const onSubmit = async (formInput) => {
     formInput.image = selectedBase64File
-    newHouse({ variables: formInput });
+    await newHouse({ variables: formInput });
     handleClose();
   };
 
   const handleClose = () => {
+    reset(defaultValues)
+    setSelectedFile(null)
+    setSelectedBase64File(null)
     setOpen(false);
   };
 
@@ -210,7 +208,11 @@ export default function NewHouseForm({ open, setOpen }) {
           </Stack>
 
           <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
-            Furnished <RHFCheckbox style={{ marginLeft: '2px', marginTop: '-10px' }} name="furnished" defaultChecked />
+            Furnished <RHFCheckbox style={{ marginLeft: '2px', marginTop: '-10px' }} name="furnished" />
+          </Stack>
+
+          <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
+            Reserved <RHFCheckbox style={{ marginLeft: '2px', marginTop: '-10px' }} name="reserved" />
           </Stack>
 
           <div style={{ marginLeft: '1px', marginTop: '10px' }}>Upload your house photo</div>
