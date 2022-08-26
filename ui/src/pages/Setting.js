@@ -26,17 +26,23 @@ const style = {
 };
 
 export default function ChangePassword({ open, setOpen }) {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [resetPassword] = useMutation(CHANGE_PASSWORD_MUTATION);
   const PasswordSchema = Yup.object().shape({
   
-    oldPassword: Yup.string().required('password required'),
-    newPassword: Yup.string().required(),
+    oldPassword: Yup.string().required('Password required'),
+    newPassword: Yup.string().required("New Password required"),
+    confirmPassword: Yup.string()
+    .oneOf([Yup.ref('newPassword'), null], "Passwords don't match!")
+    .required('Confirm Password Required')
   });
   const defaultValues = {
   
     oldPassword: '',
     newPassword: '',
+    confirmPassword: '',
     
   };
   const methods = useForm({
@@ -46,16 +52,18 @@ export default function ChangePassword({ open, setOpen }) {
 
   const {
     handleSubmit,
+    reset,
     formState: { isSubmitting },
   } = methods;
 
   const onSubmit = async (formInput) => {
-
-    resetPassword({ variables: formInput });
+    await resetPassword({ variables: formInput });
+    reset(defaultValues);
     handleClose();
   };
 
   const handleClose = () => {
+    reset(defaultValues);
     setOpen(false);
   };
   
@@ -69,19 +77,19 @@ export default function ChangePassword({ open, setOpen }) {
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Box sx={style}>
         <Stack>
-          Change Password
+          Reset Password
         </Stack>
         <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
           
           <RHFTextField
           name="oldPassword"
           label="oldPassword"
-          type={showPassword ? 'text' : 'oldPassword'}
+          type={showOldPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                <IconButton onClick={() => setShowOldPassword(!showOldPassword)} edge="end">
+                  <Iconify icon={showOldPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
                 </IconButton>
               </InputAdornment>
             ),
@@ -92,12 +100,12 @@ export default function ChangePassword({ open, setOpen }) {
         <RHFTextField
           name="newPassword"
           label="newPassword"
-          type={showPassword ? 'text' : 'newPassword'}
+          type={showNewPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                <IconButton onClick={() => setShowNewPassword(!showNewPassword)} edge="end">
+                  <Iconify icon={showNewPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
                 </IconButton>
               </InputAdornment>
             ),
@@ -108,12 +116,12 @@ export default function ChangePassword({ open, setOpen }) {
         <RHFTextField
           name="confirmPassword"
           label="confirmPassword"
-          type={showPassword ? 'text' : 'confirmPassword'}
+          type={showConfirmPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                <IconButton onClick={() => setShowConfirmPassword(!showConfirmPassword)} edge="end">
+                  <Iconify icon={showConfirmPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
                 </IconButton>
               </InputAdornment>
             ),

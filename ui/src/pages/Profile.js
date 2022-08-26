@@ -83,10 +83,11 @@ export default function Profile({currentUser}) {
       
         <Stack sx={{ mt: 4 }}>
           <Button
+          // size= "small"
             onClick={() => {
               setOpen(true);
             }}
-            variant="contained"
+            // variant="contained"
             
           >
              Reset Password
