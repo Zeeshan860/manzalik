@@ -26,7 +26,7 @@ import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import Iconify from '../components/Iconify';
 import SearchNotFound from '../components/SearchNotFound';
-import { UserListHead, HouseListToolbar, UserMoreMenu } from '../sections/@dashboard/user';
+import { UserListHead, HouseListToolbar, HouseMoreMenu } from '../sections/@dashboard/house';
 // mock
 import USERLIST from '../_mock/user';
 import NewHouseModal from '../components/Newhouse';
@@ -215,7 +215,7 @@ export default function PersonalHouses() {
                         <TableCell align="left">{furnished ? 'Yes' : 'No'}</TableCell>
 
                         <TableCell align="right">
-                          <UserMoreMenu />
+                          <HouseMoreMenu />
                         </TableCell>
                       </TableRow>
                     );
