@@ -29,7 +29,7 @@ import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, HouseListToolbar, HouseMoreMenu } from '../sections/@dashboard/house';
 // mock
 import USERLIST from '../_mock/user';
-import NewHouseModal from '../components/New-house';
+import NewHouseModal from '../components/Newhouse';
 
 // ----------------------------------------------------------------------
 
