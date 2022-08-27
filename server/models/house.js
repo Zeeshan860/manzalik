@@ -53,6 +53,11 @@ function main(db) {
         type: Sequelize.BOOLEAN,
         allowNull: false,
       },
+      reserved: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+      },
       userId: {
         type: Sequelize.UUID,
         allowNull: false,

@@ -40,7 +40,7 @@ const TABLE_HEAD = [
   { id: 'area', label: 'Area', alignRight: false },
   { id: 'rentalPrice', label: 'Rental Price', alignRight: false },
   { id: 'furnished', label: 'Furnished', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
+  { id: 'reserved', label: 'Reserved', alignRight: false },
 
   { id: '' },
 ];
@@ -90,6 +90,9 @@ export default function PersonalHouses() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const [open, setOpen] = useState(false);
+
+  const [modalData, setModalData] = useState(null);
+
   const { data, refetch } = useQuery(PERSONAL_HOUSES_QUERY);
 
   const handleRequestSort = (event, property) => {
@@ -138,6 +141,11 @@ export default function PersonalHouses() {
     setPage(0);
   };
 
+  const onEditClick = (data) => {
+    setModalData(data);
+    setOpen(true);
+  }
+
   const handleFilterByName = (event) => {
     setFilterName(event.target.value);
   };
@@ -148,7 +156,7 @@ export default function PersonalHouses() {
 
   return (
     <Page title="Personal Houses">
-      <NewHouseModal open={open} setOpen={setOpen} />
+      <NewHouseModal open={open} setOpen={setOpen} data={modalData}/>
 
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
@@ -158,8 +166,7 @@ export default function PersonalHouses() {
           <Button
             variant="contained"
             onClick={() => {
-              console.log('here');
-
+              setModalData(null)
               setOpen(true);
             }}
             startIcon={<Iconify icon="eva:plus-fill" />}
@@ -185,7 +192,7 @@ export default function PersonalHouses() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, city, area, avatarUrl, status, furnished, rentalPrice, province, image } = row;
+                    const { id, name, city, area, furnished, reserved,  rentalPrice, province, image } = row;
                     const isItemSelected = selected.indexOf(name) !== -1;
 
                     return (
@@ -210,16 +217,19 @@ export default function PersonalHouses() {
                         <TableCell align="left">{city}</TableCell>
                         <TableCell align="left">{area}</TableCell>
                         <TableCell align="left">{rentalPrice}</TableCell>
-
-                        <TableCell align="left">{furnished ? 'Yes' : 'No'}</TableCell>
-                        {/* <TableCell align="left">
-                          <Label variant="ghost" color={(furnished=== 'Furnished' && 'Not Furnished') || 'success'}>
-                            {sentenceCase(furnished)}
+                        <TableCell align="left">
+                          <Label variant="ghost" color={furnished ? 'warning' : 'info'}>
+                            {furnished ? "Furnished" : "Non Furnished"}
                           </Label>
-                        </TableCell> */}
+                        </TableCell>
+                        <TableCell align="left">
+                          <Label variant="ghost" color={reserved ? 'error' : 'success'}>
+                            {reserved ? "Reserved" : "Available For Rent"}
+                          </Label>
+                        </TableCell>
 
                         <TableCell align="right">
-                          <HouseMoreMenu />
+                          <HouseMoreMenu data={row} onEditClick={onEditClick} />
                         </TableCell>
                       </TableRow>
                     );

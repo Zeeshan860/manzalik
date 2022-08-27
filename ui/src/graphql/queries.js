@@ -37,6 +37,7 @@ export const PERSONAL_HOUSES_QUERY = gql`
     province
     city
     furnished
+    reserved
     image
       
     }
@@ -58,6 +59,11 @@ export const HOUSES_QUERY = gql`
     city
     furnished
     image
+    createdAt
+    user{
+      id
+      phoneNo
+    }
       
     }
   }

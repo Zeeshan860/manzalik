@@ -1997,7 +1997,7 @@
     "deepmerge" "^4.2.2"
     "svgo" "^2.5.0"
 
-"@svgr/webpack@^6.2.1":
+"@svgr/webpack@^5.5.0", "@svgr/webpack@^6.2.1":
   "integrity" "sha512-h09ngMNd13hnePwgXa+Y5CgOjzlCvfWLHg+MBnydEedAnuLRzUHUJmGS3o2OsrhxTOOqEsPOFt5v/f6C5Qulcw=="
   "resolved" "https://registry.npmjs.org/@svgr/webpack/-/webpack-6.2.1.tgz"
   "version" "6.2.1"
@@ -6538,6 +6538,11 @@
   "resolved" "https://registry.npmjs.org/minimist/-/minimist-1.2.6.tgz"
   "version" "1.2.6"
 
+"moment@^2.24.0", "moment@^2.29.1", "moment@^2.29.4":
+  "integrity" "sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w=="
+  "resolved" "https://registry.npmjs.org/moment/-/moment-2.29.4.tgz"
+  "version" "2.29.4"
+
 "ms@^2.1.1", "ms@2.1.2":
   "integrity" "sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w=="
   "resolved" "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz"
@@ -7738,7 +7743,7 @@
     "strip-ansi" "^6.0.1"
     "text-table" "^0.2.0"
 
-"react-dom@^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0 || ^17.0 || ^18.0.0", "react-dom@^16.6.0 || ^17.0.0 || ^18.0.0", "react-dom@^17.0.0 || ^18.0.0", "react-dom@^17.0.2 || ^18.0.0", "react-dom@^18.2.0", "react-dom@>=16.6.0", "react-dom@>=16.8":
+"react-dom@^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0 || ^17.0 || ^18.0.0", "react-dom@^16.6.0 || ^17.0.0 || ^18.0.0", "react-dom@^17.0.0 || ^18.0.0", "react-dom@^17.0.2 || ^18.0.0", "react-dom@^18.2.0", "react-dom@>=16", "react-dom@>=16.6.0", "react-dom@>=16.8":
   "integrity" "sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   "version" "18.2.0"
@@ -7888,6 +7893,11 @@
   "version" "18.2.0"
   dependencies:
     "loose-envify" "^1.1.0"
+
+"reactjs-popup@^2.0.5":
+  "integrity" "sha512-b5hv9a6aGsHEHXFAgPO5s1Jw1eSkopueyUVxQewGdLgqk2eW0IVXZrPRpHR629YcgIpC2oxtX8OOZ8a7bQJbxA=="
+  "resolved" "https://registry.npmjs.org/reactjs-popup/-/reactjs-popup-2.0.5.tgz"
+  "version" "2.0.5"
 
 "read-cache@^1.0.0":
   "integrity" "sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA=="

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Modal,
   Stack,
@@ -38,12 +38,13 @@ const style = {
   maxHeight: "100%"
 };
 
-export default function NewHouseModal({ open, setOpen }) {
-  const [newHouse] = useMutation(NEW_HOUSE_MUTATION);
+export default function NewHouseModal({ open, setOpen, data }) {
+  const [saveHouse] = useMutation(NEW_HOUSE_MUTATION);
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedBase64File, setSelectedBase64File] = useState(null)
 
   const HouseSchema = Yup.object().shape({
+    // id:  Yup.string(),
     area: Yup.string().required('Area required'),
     bedRooms: Yup.number().required('Bedrooms required'),
     kitchens: Yup.number().required('Kitchens required'),
@@ -59,11 +60,12 @@ export default function NewHouseModal({ open, setOpen }) {
   });
 
   const defaultValues = {
+    // id: '',
     area: '',
     bedRooms: '0',
     kitchens: '0',
     washRooms: '0',
-    noOfStoreys: '',
+    noOfStoreys: '0',
     rentalPrice: '0',
     location: '',
     description: '',
@@ -72,6 +74,18 @@ export default function NewHouseModal({ open, setOpen }) {
     furnished: true,
     reserved: false,
   };
+
+  useEffect(() => {
+    if (open && data) {
+      reset(data);
+      console.log(data.image)
+      setSelectedFile(data.image ? {name: "image.jpg"} : null);
+      setSelectedBase64File(data.image);
+      const getCitydata = Data.find((province) => province.provincename === data.province).cities;
+      setCity(getCitydata);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
 
   const methods = useForm({
     resolver: yupResolver(HouseSchema),
@@ -86,7 +100,7 @@ export default function NewHouseModal({ open, setOpen }) {
 
   const onSubmit = async (formInput) => {
     formInput.image = selectedBase64File
-    await newHouse({ variables: formInput });
+    await saveHouse({ variables: formInput });
     handleClose();
   };
 
@@ -165,7 +179,7 @@ export default function NewHouseModal({ open, setOpen }) {
           </Stack>
 
           <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
-            <RHFTextField label="No of Storeys" name="noOfStoreys" />
+            <RHFTextField type="number" label="No of Storeys" name="noOfStoreys" />
             <RHFTextField type="number" label="Rental Price" name="rentalPrice" />
           </Stack>
 
@@ -232,7 +246,7 @@ export default function NewHouseModal({ open, setOpen }) {
               Cancel
             </Button>
             <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
-              Create
+              Save
             </LoadingButton>
           </Stack>
           </Scrollbar>

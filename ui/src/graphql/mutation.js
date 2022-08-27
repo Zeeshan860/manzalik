@@ -39,6 +39,7 @@ export const CHANGE_PASSWORD_MUTATION = gql`
 
 export const NEW_HOUSE_MUTATION = gql`
   mutation newHouseMutation(
+    $id: ID,
     $area:String!,
     $bedRooms: Int!,
     $kitchens: Int!,
@@ -50,11 +51,12 @@ export const NEW_HOUSE_MUTATION = gql`
     $province:String!,
     $city:String!,
     $furnished:Boolean!,
+    $reserved:Boolean!,
     $image:String
   ) {
-    newHouse(area: $area, bedRooms:$bedRooms, kitchens: $kitchens, washRooms:$washRooms,
+    saveHouse(id: $id, area: $area, bedRooms:$bedRooms, kitchens: $kitchens, washRooms:$washRooms,
       noOfStoreys:$noOfStoreys, rentalPrice:$rentalPrice, location:$location,  description:$description,
-      province:$province,  city: $city, furnished:$furnished, image: $image ) {
+      province:$province,  city: $city, furnished:$furnished, reserved: $reserved, image: $image ) {
         id
         area
         bedRooms

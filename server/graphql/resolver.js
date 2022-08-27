@@ -40,7 +40,14 @@ const resolvers = {
       if (!user) {
         throw new Error("Unauthorized")
       }
-      const houses= db.House.findAll()
+      const houses= db.House.findAll({
+        where: {reserved: false},
+        include: [{
+          model: db.User,
+          as: 'user',
+          fields: ['id','phoneNo']
+        }]
+      })
       
       return  houses;
     },
@@ -120,7 +127,7 @@ const resolvers = {
     },
 
     // enter new house
-    newHouse: async (parent, args, context, info) => {
+    saveHouse: async (parent, args, context, info) => {
       try {
         const user = context.user;
         if (!user) {
@@ -128,6 +135,7 @@ const resolvers = {
         }
         const db = context.db;
         const {
+          id,
           area,
           bedRooms,
           kitchens,
@@ -139,11 +147,13 @@ const resolvers = {
           province,
           city,
           furnished,
+          reserved,
           image,
         } = args;
 
 
-        const house = await db.House.create({
+        const [house] = await db.House.upsert({
+          id,
           area,
           bedRooms,
           kitchens,
@@ -155,8 +165,9 @@ const resolvers = {
           province,
           city,
           furnished,
+          reserved,
           userId: user.id,
-          image: image
+          image
         });
         
         return house;

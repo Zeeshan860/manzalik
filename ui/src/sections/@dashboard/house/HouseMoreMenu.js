@@ -7,7 +7,7 @@ import Iconify from '../../../components/Iconify';
 
 // ----------------------------------------------------------------------
 
-export default function HouseMoreMenu() {
+export default function HouseMoreMenu({data, onEditClick}) {
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -34,7 +34,10 @@ export default function HouseMoreMenu() {
           <ListItemText primary="Delete" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
 
-        <MenuItem component={RouterLink} to="#" sx={{ color: 'text.secondary' }}>
+        <MenuItem sx={{ color: 'text.secondary' }} onClick={() => {
+          onEditClick(data)
+          setIsOpen(false)
+          }}>
           <ListItemIcon>
             <Iconify icon="eva:edit-fill" width={24} height={24} />
           </ListItemIcon>
