@@ -32,7 +32,7 @@ function main() {
   db.User.hasMany(db.House, { sourceKey: 'id', foreignKey: 'userId' });
   db.House.belongsTo(db.User, { as: 'user', foreignKey: 'userId' });
 
-  sequelize.sync({force: true});
+  sequelize.sync();
   return db;
 }
 
