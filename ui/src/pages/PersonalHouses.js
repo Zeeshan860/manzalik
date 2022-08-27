@@ -26,7 +26,7 @@ import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import Iconify from '../components/Iconify';
 import SearchNotFound from '../components/SearchNotFound';
-import { UserListHead, HouseListToolbar, HouseMoreMenu } from '../sections/@dashboard/house';
+import { HouseListToolbar, HouseMoreMenu,HouseListHead } from '../sections/@dashboard/house';
 // mock
 import USERLIST from '../_mock/user';
 import NewHouseModal from '../components/Newhouse';
@@ -174,7 +174,7 @@ export default function PersonalHouses() {
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
-                <UserListHead
+                <HouseListHead
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
@@ -197,10 +197,8 @@ export default function PersonalHouses() {
                         selected={isItemSelected}
                         aria-checked={isItemSelected}
                       >
-                        <TableCell padding="checkbox">
-                          <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, name)} />
-                        </TableCell>
-                        <TableCell component="th" scope="row" padding="none">
+                       
+                        <TableCell component="th" scope="row" padding="10px">
                           <Stack direction="row" alignItems="center" spacing={2}>
                             <Avatar alt={name} src={image} />
                             <Typography variant="subtitle2" noWrap>

@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@apollo/client';
 import { CHANGE_PASSWORD_MUTATION } from '../graphql';
-import { FormProvider, RHFTextField } from './hook-form';
+import { FormProvider, RHFTextField } from './hook-form'; 
 
 import Iconify from './Iconify';
 
@@ -58,7 +58,6 @@ export default function ResetPasswordModal({ open, setOpen }) {
 
   const onSubmit = async (formInput) => {
     await resetPassword({ variables: formInput });
-    reset(defaultValues);
     handleClose();
   };
 
@@ -83,7 +82,7 @@ export default function ResetPasswordModal({ open, setOpen }) {
           
           <RHFTextField
           name="oldPassword"
-          label="oldPassword"
+          label="Old Password"
           type={showOldPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
@@ -99,7 +98,7 @@ export default function ResetPasswordModal({ open, setOpen }) {
         <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
         <RHFTextField
           name="newPassword"
-          label="newPassword"
+          label="New Password"
           type={showNewPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
@@ -115,7 +114,7 @@ export default function ResetPasswordModal({ open, setOpen }) {
         <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
         <RHFTextField
           name="confirmPassword"
-          label="confirmPassword"
+          label="Confirm Password"
           type={showConfirmPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
