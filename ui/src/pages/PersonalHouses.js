@@ -36,10 +36,11 @@ import NewHouseModal from '../components/Newhouse';
 const TABLE_HEAD = [
   // { id: 'id', label: 'Name', alignRight: false },
   { id: 'province', label: 'Province', alignRight: false },
+  { id: 'city', label: 'City', alignRight: false },
   { id: 'area', label: 'Area', alignRight: false },
   { id: 'rentalPrice', label: 'Rental Price', alignRight: false },
-  { id: 'city', label: 'City', alignRight: false },
   { id: 'furnished', label: 'Furnished', alignRight: false },
+  { id: 'status', label: 'Status', alignRight: false },
 
   { id: '' },
 ];
@@ -70,7 +71,7 @@ function applySortFilter(array, comparator, query) {
     return a[1] - b[1];
   });
   if (query) {
-    return filter(array, (_user) => _user.province.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+    return filter(array, (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
   }
   return stabilizedThis.map((el) => el[0]);
 }
@@ -143,7 +144,6 @@ export default function PersonalHouses() {
   const personalHouses = data?.getPersonalHouses || [];
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - personalHouses.length) : 0;
   const filteredUsers = applySortFilter(personalHouses, getComparator(order, orderBy), filterName);
-
   const isUserNotFound = filteredUsers.length === 0;
 
   return (
@@ -185,7 +185,7 @@ export default function PersonalHouses() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, city, area, avatarUrl, furnished, rentalPrice, province, image } = row;
+                    const { id, name, city, area, avatarUrl, status, furnished, rentalPrice, province, image } = row;
                     const isItemSelected = selected.indexOf(name) !== -1;
 
                     return (
@@ -210,7 +210,13 @@ export default function PersonalHouses() {
                         <TableCell align="left">{city}</TableCell>
                         <TableCell align="left">{area}</TableCell>
                         <TableCell align="left">{rentalPrice}</TableCell>
+
                         <TableCell align="left">{furnished ? 'Yes' : 'No'}</TableCell>
+                        {/* <TableCell align="left">
+                          <Label variant="ghost" color={(furnished=== 'Furnished' && 'Not Furnished') || 'success'}>
+                            {sentenceCase(furnished)}
+                          </Label>
+                        </TableCell> */}
 
                         <TableCell align="right">
                           <HouseMoreMenu />

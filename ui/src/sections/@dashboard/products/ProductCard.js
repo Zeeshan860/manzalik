@@ -23,21 +23,21 @@ const ProductImgStyle = styled('img')({
   position: 'absolute',
 });
 // ----------------------------------------------------------------------
-
+ 
 ShopProductCard.propTypes = {
   product: PropTypes.object,
 };
 
 export default function ShopProductCard({ product }) {
-  const { name, cover, colors, status } = product;
+  const { area,description,bedRooms,washRooms,kitchen, rentalPrice,furnished,phoneNo,province,image,city} = product;
 
   return (
     <Card style={{ width: '100%'}}>
       <Box sx={{ pt: '100%', position: 'relative' }}>
-        {status && (
+        { furnished && (
           <Label
             variant="filled"
-            color={(status === 'sale' && 'error') || 'info'}
+            color={(furnished  && 'error') || 'info'}
             sx={{
               zIndex: 9,
               top: 16,
@@ -46,48 +46,48 @@ export default function ShopProductCard({ product }) {
               textTransform: 'uppercase',
             }}
           >
-            {status}
+            {furnished ? 'Furnished': 'Non Furnished'} 
           </Label>
         )}
-         <ProductImgStyle alt={name} src={cover} />
+         <ProductImgStyle alt={province} src={image} />
        
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
-        <Link to="#" color="inherit" underline="hover" component={RouterLink}>
+       
           <Typography   marginLeft={-1} variant="subtitle2" noWrap>
-            {name}
+            {city}
             <Stack marginLeft={0.1}>
-              <h2>PKR 23,400</h2>
+             {rentalPrice} PKR
             </Stack>
-            <h> <Stack>  Furnished </Stack></h>
+             {/* <Stack> {furnished} </Stack> */}
            
           </Typography>
-        </Link>
+        
 
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <ColorPreview colors={colors} />
+          {/* <ColorPreview colors={colors} /> */}
 
           <Typography varia3nt="subtitle1">
             <Stack spacing={2} direction="row" marginLeft={-20.5}>
-              <LocalHotelOutlinedIcon />5
-              <BathtubOutlinedIcon />3
-              <CountertopsOutlinedIcon />2
-              <SquareFootOutlinedIcon />
-              5 Marla
+              <LocalHotelOutlinedIcon bedRooms={bedRooms} />
+              <BathtubOutlinedIcon washRooms={washRooms}/>
+              <CountertopsOutlinedIcon kitchen={kitchen}/>
+              <SquareFootOutlinedIcon  area={area}/>
+              
             </Stack>
        
             <Stack marginLeft={-20.5} marginTop={1} >
-              <p>
-                <h3>Description:</h3> House available for rent
-              </p>
+              <Stack>
+                <Stack>Description:</Stack> {description}
+              </Stack>
             </Stack>
             
             <Stack marginLeft={-20.5}>
-              <h3>Phone n.o</h3>
+              <Stack>Phone n.o</Stack>
               <Stack direction="row" marginTop={1} >
                 <PhoneAndroidOutlinedIcon />
-                03165038814
+                {phoneNo}
               </Stack>
             </Stack>
             

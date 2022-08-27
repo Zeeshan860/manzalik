@@ -202,10 +202,13 @@ export default function NewHouseModal({ open, setOpen }) {
           <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
             <RHFTextField label="Location" name="location" />
           </Stack>
-
           <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
-            <RHFTextArea placeholder="Enter Description" name="description" />
+            <RHFTextField placeholder="Enter Description" name="description" />
           </Stack>
+
+          {/* <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
+            <RHFTextArea placeholder="Enter Description" name="description" />
+          </Stack> */}
 
           <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
             Furnished <RHFCheckbox style={{ marginLeft: '2px', marginTop: '-10px' }} name="furnished" />
