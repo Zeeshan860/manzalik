@@ -72,3 +72,11 @@ export const NEW_HOUSE_MUTATION = gql`
         image
     }
     }`;
+
+    export const DELETE_HOUSE_MUTATION = gql`
+  mutation deleteHouseMutation(
+    $id: ID!
+  ) {
+    deleteHouse(id: $id)
+    }`;
+

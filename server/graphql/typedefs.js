@@ -41,6 +41,7 @@ type Query {
 }
 
 type Mutation {
+    deleteHouse(id: ID!): String
     registerUser (   firstName:String!,
         lastName: String!,
         phoneNo: String!,

@@ -13,16 +13,10 @@ import PRODUCTS from '../_mock/products';
 // ----------------------------------------------------------------------
 
 export default function EcommerceShop() {
-  const [openFilter, setOpenFilter] = useState(false);
-  const { loading, error, data } = useQuery(HOUSES_QUERY);
+  const { data } = useQuery(HOUSES_QUERY, {
+  pollInterval: 5000,
+  fetchPolicy: 'no-cache',});
 
-  const handleOpenFilter = () => {
-    setOpenFilter(true);
-  };
-
-  const handleCloseFilter = () => {
-    setOpenFilter(false);
-  };
   const houses = data?.getHouses || [];
   console.log(houses);
   
@@ -34,6 +28,8 @@ export default function EcommerceShop() {
         <Typography variant="h4" sx={{ mb: 5 }}>
           Home
         </Typography>
+
+        {houses.length === 0 && <Stack>No data Available</Stack>}
 
         <ProductList products={houses} />
       </Container>

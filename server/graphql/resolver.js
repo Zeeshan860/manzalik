@@ -126,6 +126,20 @@ const resolvers = {
       }
     },
 
+    deleteHouse: async (parent, args, context, info) => {
+      try {
+        const user = context.user;
+        const db= context.db
+        if (!user) {
+          throw new Error("Unauthorized")
+        }
+        await db.House.destroy({where: {id: args.id}})
+        return "success";
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    },
+
     // enter new house
     saveHouse: async (parent, args, context, info) => {
       try {

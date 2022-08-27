@@ -1,6 +1,6 @@
 import { filter } from 'lodash';
 import { useState, useEffect } from 'react';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 
 // material
 import {
@@ -20,7 +20,7 @@ import {
   // Popup,
 } from '@mui/material';
 // components
-import { PERSONAL_HOUSES_QUERY } from '../graphql';
+import { PERSONAL_HOUSES_QUERY, DELETE_HOUSE_MUTATION } from '../graphql';
 import Page from '../components/Page';
 import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
@@ -95,6 +95,8 @@ export default function PersonalHouses() {
 
   const { data, refetch } = useQuery(PERSONAL_HOUSES_QUERY);
 
+  const [deleteHouse] = useMutation(DELETE_HOUSE_MUTATION);
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -145,6 +147,11 @@ export default function PersonalHouses() {
     setModalData(data);
     setOpen(true);
   }
+
+  const onDeleteClick = async (data) => {
+    await deleteHouse({ variables: data });
+    refetch();
+  };
 
   const handleFilterByName = (event) => {
     setFilterName(event.target.value);
@@ -229,7 +236,7 @@ export default function PersonalHouses() {
                         </TableCell>
 
                         <TableCell align="right">
-                          <HouseMoreMenu data={row} onEditClick={onEditClick} />
+                          <HouseMoreMenu data={row} onEditClick={onEditClick} onDeleteClick={onDeleteClick}/>
                         </TableCell>
                       </TableRow>
                     );
