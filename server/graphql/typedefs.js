@@ -7,6 +7,12 @@ type User{
     email: String!  
 }
 
+type HouseAgregate{
+    total: Int
+    reserved: Int
+    nonReserved: Int
+}
+
 type House{
     id: ID!
     area:String!
@@ -34,6 +40,7 @@ type AuthPayload {
 type Query {
     totalUsers:Int!
     totalHouse:Int!
+    getHousesAgregate: HouseAgregate
     me: User!
     getPersonalHouses:[House]!
     getHouses:[House]!
@@ -42,7 +49,7 @@ type Query {
 
 type Mutation {
     deleteHouse(id: ID!): String
-    registerUser (   firstName:String!,
+    registerUser (firstName:String!,
         lastName: String!,
         phoneNo: String!,
         email: String! ,

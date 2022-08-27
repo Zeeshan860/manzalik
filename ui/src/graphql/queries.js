@@ -11,6 +11,17 @@ export const TOTAL_HOUSE_QUERY = gql`
     totalHouse
   }
 `;
+
+export const AGREGATE_HOUSE_QUERY = gql`
+  query {
+    getHousesAgregate{
+      total
+      reserved
+      nonReserved
+    }
+  }
+`;
+
 export const CURRENT_USER_QUERY = gql`
   query {
     me {

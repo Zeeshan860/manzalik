@@ -16,6 +16,22 @@ const resolvers = {
       const count = await db.House.count();
       return count;
     },
+    getHousesAgregate: async (parent, args, context, info) => {
+      const user = context.user;
+      const db= context.db
+      if (!user) {
+        throw new Error("Unauthorized")
+      }
+
+      const total = await db.House.count({where: {userId: user.id}});
+      const reserved = await db.House.count({where: {userId: user.id, reserved: true}});
+      const nonReserved = await db.House.count({where: {userId: user.id, reserved: false}});
+      return {
+        total,
+        reserved,
+        nonReserved
+      };
+    },
     me: async (parent, args, context, info, ) => {
       const user = context.user;
       
