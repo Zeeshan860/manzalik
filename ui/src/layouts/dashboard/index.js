@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Outlet, useNavigate, useOutletContext  } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Outlet, useNavigate, useOutletContext, useLocation  } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 // material
 import { styled } from '@mui/material/styles';
@@ -35,15 +35,22 @@ const MainStyle = styled('div')(({ theme }) => ({
 
 export default function DashboardLayout() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [open, setOpen] = useState(false);
+  const [isNonLoginMode, setIsNonLoginMode] = useState(false);
   const { loading, error, data } = useQuery(CURRENT_USER_QUERY);
+
+  useEffect(()=>{
+    if (!loading && (error || !data) && location.pathname !== "/dashboard/home") {
+      navigate('/login', { replace: true });
+      setIsNonLoginMode(true)
+    }
+  }, [loading, error, data])
+
   if (loading) {
     return <div>Loading...</div>;
   }
-  if (!loading && (error || !data)) {
-    navigate('/login', { replace: true });
-    return null;
-  }
+  
   return (
     <RootStyle>
       <DashboardNavbar onOpenSidebar={() => setOpen(true)} currentUser={data?.me}/>
