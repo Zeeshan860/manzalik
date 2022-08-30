@@ -35,15 +35,15 @@ export default function DashboardApp() {
 
         <Grid container spacing={12}>
           <Grid item xs={12} sm={9} md={4}>
-            <AppWidgetSummary title="Total Houses" total={agregateData?.getHousesAgregate?.total || 0} icon={'ant-design:android-filled'} />
+            <AppWidgetSummary title="Total Houses" total={agregateData?.getHousesAgregate?.total || 0} icon={'ant-design:home-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={4}>
-            <AppWidgetSummary title="Available Houses" total={agregateData?.getHousesAgregate?.nonReserved || 0} color="info" icon={'ant-design:apple-filled'} />
+            <AppWidgetSummary title="Available Houses" total={agregateData?.getHousesAgregate?.nonReserved || 0} color="info" icon={'ant-design:home-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={4}>
-            <AppWidgetSummary title=" Reserved Houses" total={agregateData?.getHousesAgregate?.reserved || 0} color="warning" icon={'ant-design:windows-filled'} />
+            <AppWidgetSummary title=" Reserved Houses" total={agregateData?.getHousesAgregate?.reserved || 0} color="warning" icon={'ant-design:home-filled'} />
           </Grid>
           <Grid item xs={18} md={6} lg={13}>
             <AppCurrentVisits

@@ -1,7 +1,7 @@
  [
   {
     "provinceid":"1","provincename":"Punjab","cities": [
-      {"cityid":"40","cityname":"MandiBahauddin","provinceid":"1"},
+      {"cityid":"40","cityname":"Sialkot","provinceid":"1"},
       {"cityid":"41","cityname":"Lahore","provinceid":"1"},
       {"cityid":"42","cityname":"Multan","provinceid":"1"}
     ]
@@ -9,7 +9,7 @@
   {
     "provinceid":"2","provincename":"Sindh","cities": [
       {"cityid":"43","cityname":"Karachi","provinceid":"2"},
-      {"cityid":"44","cityname":"Hyderabad","provinceid":"2"},
+      {"cityid":"44","cityname":"Hala","provinceid":"2"},
       {"cityid":"45","cityname":"Larkana","provinceid":"2"}
     ]
   }
