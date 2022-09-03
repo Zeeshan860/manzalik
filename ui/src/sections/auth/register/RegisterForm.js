@@ -55,7 +55,7 @@ export default function RegisterForm() {
     registerUser({variables:formInput}).then(({data}) => {
       localStorage.setItem(AUTH_TOKEN, data.registerUser.token);
     
-      navigate('/dashboard/app', { replace: true });
+      navigate('/dashboard/home', { replace: true });
     });
   
   };
