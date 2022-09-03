@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
+import { Box, Link, Drawer, Typography, Avatar } from '@mui/material';
 // mock
 import account from '../../_mock/account';
 // hooks
@@ -41,7 +41,7 @@ DashboardSidebar.propTypes = {
   onCloseSidebar: PropTypes.func,
 };
 
-export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar, currentUser }) {
+export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar, isNonLoginMode, currentUser }) {
   const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'lg');
@@ -69,16 +69,22 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar, curren
           <AccountStyle>
             <Avatar src={account.photoURL} alt="photoURL" />
             <Box sx={{ ml: 2 }}>
-              <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {currentUser?.firstName}  {currentUser?.lastName}
-              </Typography>
+              {isNonLoginMode ? 
+              <Link variant="subtitle2" to="/login" component={RouterLink}>
+              Login
+            </Link> :
+            <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
+            {currentUser?.firstName}  {currentUser?.lastName}
+          </Typography>
+            }
+              
             
             </Box>
           </AccountStyle>
         </Link>
       </Box>
 
-      <NavSection navConfig={navConfig} />
+      <NavSection navConfig={navConfig} isNonLoginMode={isNonLoginMode}/>
 
       <Box sx={{ flexGrow: 1 }} />
 

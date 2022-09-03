@@ -34,7 +34,7 @@ NavItem.propTypes = {
   active: PropTypes.func,
 };
 
-function NavItem({ item, active }) {
+function NavItem({ item, active, isNonLoginMode }) {
   const theme = useTheme();
 
   const isActiveRoot = active(item.path);
@@ -62,6 +62,7 @@ function NavItem({ item, active }) {
     return (
       <>
         <ListItemStyle
+        dis
           onClick={handleOpen}
           sx={{
             ...(isActiveRoot && activeRootStyle),
@@ -123,6 +124,7 @@ function NavItem({ item, active }) {
   return (
     <ListItemStyle
       component={RouterLink}
+      disabled={isNonLoginMode && title !== "Home"}
       to={path}
       sx={{
         ...(isActiveRoot && activeRootStyle),
@@ -139,7 +141,8 @@ NavSection.propTypes = {
   navConfig: PropTypes.array,
 };
 
-export default function NavSection({ navConfig, ...other }) {
+export default function 
+NavSection({ navConfig, isNonLoginMode, ...other }) {
   const { pathname } = useLocation();
 
   const match = (path) => (path ? !!matchPath({ path, end: false }, pathname) : false);
@@ -148,7 +151,7 @@ export default function NavSection({ navConfig, ...other }) {
     <Box {...other}>
       <List disablePadding sx={{ p: 1 }}>
         {navConfig.map((item) => (
-          <NavItem key={item.title} item={item} active={match} />
+          <NavItem key={item.title} item={item} active={match} isNonLoginMode={isNonLoginMode}/>
         ))}
       </List>
     </Box>
