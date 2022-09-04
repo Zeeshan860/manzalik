@@ -51,11 +51,12 @@ const resolvers = {
       return  houses;
     },
     getHouses:  async (parent, args, context, info ) => {
-      const user = context.user;
       const db= context.db
-      if (!user) {
-        throw new Error("Unauthorized")
-      }
+      // Un comment if you want to restrict this API
+      // const user = context.user;
+      // if (!user) {
+      //   throw new Error("Unauthorized")
+      // }
       const houses= db.House.findAll({
         where: {reserved: false},
         include: [{

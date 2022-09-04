@@ -28,7 +28,7 @@ export default function LogoOnlyLayout() {
     return <div>Loading...</div>;
   }
   if (!loading && (!error || data)) {
-    navigate('/dashboard/app', { replace: true });
+    navigate('/dashboard/home', { replace: true });
     return null;
   }
   return (

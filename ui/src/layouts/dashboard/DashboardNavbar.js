@@ -39,7 +39,8 @@ DashboardNavbar.propTypes = {
   onOpenSidebar: PropTypes.func,
 };
 
-export default function DashboardNavbar({ onOpenSidebar,currentUser}) {
+export default function DashboardNavbar({ onOpenSidebar,isNonLoginMode, currentUser}) {
+  console.log("!!!!", isNonLoginMode)
   return (
     <RootStyle>
       <ToolbarStyle>
@@ -47,14 +48,17 @@ export default function DashboardNavbar({ onOpenSidebar,currentUser}) {
           <Iconify icon="eva:menu-2-fill" />
         </IconButton>
 
-        <Searchbar />
+        {/* <Searchbar /> */}
         <Box sx={{ flexGrow: 1 }} />
-
-        <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
+        {
+          !isNonLoginMode ?  
+          <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
           {/* <LanguagePopover /> */}
           {/* <NotificationsPopover /> */}
           <AccountPopover  currentUser={currentUser}/>
-        </Stack>
+        </Stack> : null
+        }
+        
       </ToolbarStyle>
     </RootStyle>
   );

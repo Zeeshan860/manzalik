@@ -48,7 +48,7 @@ export default function LoginForm() {
       console.log(data)
       localStorage.setItem(AUTH_TOKEN, data.login.token);
     
-      navigate('/dashboard/app', { replace: true });
+      navigate('/dashboard/home', { replace: true });
     });
     
   };
