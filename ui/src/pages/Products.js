@@ -25,6 +25,36 @@ const sort = (houses, sortBy) => {
   }
 }
 
+const filter = (houses, filterData) => {
+
+  const filteredHouses = houses.filter((house) => {
+    if (filterData.city && filterData.city !== house.city) {
+      return false
+    }
+    if(filterData.province && filterData.province !== house.province) {
+      return false
+    }
+    if(filterData.category) {
+      const furnishedFilter = filterData.category === "Furnished"
+      if(house.furnished !== furnishedFilter) {
+      return false
+      }
+    }
+    if(filterData.province && filterData.province !== house.province) {
+      return false
+    }
+    if(filterData.minPrice && house.rentalPrice < filterData.minPrice) {
+      return false
+    }
+    if(filterData.maxPrice && house.rentalPrice > filterData.maxPrice) {
+      return false
+    }
+    return true
+  })
+
+  return filteredHouses
+}
+
 export default function EcommerceShop() {
   const { data } = useQuery(HOUSES_QUERY, {
   pollInterval: 5000,
@@ -33,10 +63,19 @@ export default function EcommerceShop() {
   const [openFilter, setOpenFilter] = useState(false);
   const [sortBy, setSortBy] = useState('newest');
   const [houses, setHouses] = useState([]);
+  const [filterData, setFilterData] = useState({
+    city: null,
+    province: null,
+    category: null,
+    minPrice: null,
+    maxPrice: null
+  })
 
   useEffect(() => {
-    setHouses(sort(data?.getHouses || [], sortBy))
-  }, [data, sortBy])
+    const sortedData = sort(data?.getHouses || [], sortBy)
+    const filteredData = filter(sortedData, filterData)
+    setHouses(filteredData)
+  }, [data, sortBy, filterData])
 
   const handleOpenFilter = () => {
     setOpenFilter(true);
@@ -62,6 +101,8 @@ export default function EcommerceShop() {
               isOpenFilter={openFilter}
               onOpenFilter={handleOpenFilter}
               onCloseFilter={handleCloseFilter}
+              filterData={filterData}
+              setFilterData={setFilterData}
             />
             <ProductSort value={sortBy} setValue={setSortBy}/>
           </Stack>

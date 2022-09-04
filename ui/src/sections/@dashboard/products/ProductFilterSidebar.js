@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 // material
 import {
@@ -8,17 +9,21 @@ import {
   Drawer,
   Rating,
   Divider,
+  Select,
+  MenuItem,
+  FormControl,
   Checkbox,
-  FormGroup,
+  TextField,
   IconButton,
   Typography,
   RadioGroup,
   FormControlLabel,
+  InputLabel,
 } from '@mui/material';
 // components
 import Iconify from '../../../components/Iconify';
 import Scrollbar from '../../../components/Scrollbar';
-import { ColorManyPicker } from '../../../components/color-utils';
+import Data from '../../../components/data.json';
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +34,7 @@ export const SORT_BY_OPTIONS = [
   { value: 'priceAsc', label: 'Price: Low-High' },
 ];
 export const FILTER_GENDER_OPTIONS = ['Men', 'Women', 'Kids'];
-export const FILTER_CATEGORY_OPTIONS = ['All', 'Shose', 'Apparel', 'Accessories'];
+export const FILTER_CATEGORY_OPTIONS = ['Furnished', 'Non Furnished'];
 export const FILTER_RATING_OPTIONS = ['up4Star', 'up3Star', 'up2Star', 'up1Star'];
 export const FILTER_PRICE_OPTIONS = [
   { value: 'below', label: 'Below $25' },
@@ -55,7 +60,55 @@ ShopFilterSidebar.propTypes = {
   onCloseFilter: PropTypes.func,
 };
 
-export default function ShopFilterSidebar({ isOpenFilter, onOpenFilter, onCloseFilter }) {
+export default function ShopFilterSidebar({ isOpenFilter, onOpenFilter, onCloseFilter, setFilterData, filterData }) {
+  const [cityData, setCityData] = useState([]);
+  const [province, setProvince] = useState(null);
+  const [city, setCity] = useState(null);
+  const [maxPrice, setMaxPrice] = useState(null);
+  const [minPrice, setMinPrice] = useState(null);
+  const [category, setCategory] = useState(null);
+
+  useEffect(()=>{
+    if(filterData) {
+      setCity(filterData.city);
+    setProvince(filterData.province);
+    setCategory(filterData.category);
+    setMinPrice(filterData.minPrice);
+    setMaxPrice(filterData.maxPrice);
+    }
+
+  }, [filterData, isOpenFilter])
+
+  const handleProvince = (e) => {
+    const getCitydata = Data.find((province) => province.provincename === e.target.value)?.cities;
+    setProvince(e.target.value);
+    setCity(null);
+    setCityData(getCitydata || []);
+  };
+
+  const handleCity = (e) => {
+    setCity(e.target.value);
+  };
+
+  const onClearAllClick = () => {
+    setCity(null);
+    setProvince(null);
+    setCategory(null);
+    setMinPrice(null);
+    setMaxPrice(null);
+  };
+
+  const onApplyChangesClick = () => {
+    setFilterData({
+      city,
+      province,
+      category,
+      minPrice,
+      maxPrice
+    });
+    onCloseFilter();
+  };
+
   return (
     <>
       <Button disableRipple color="inherit" endIcon={<Iconify icon="ic:round-filter-list" />} onClick={onOpenFilter}>
@@ -84,14 +137,40 @@ export default function ShopFilterSidebar({ isOpenFilter, onOpenFilter, onCloseF
         <Scrollbar>
           <Stack spacing={3} sx={{ p: 3 }}>
             <div>
-              <Typography variant="subtitle1" gutterBottom>
-                Gender
-              </Typography>
-              <FormGroup>
-                {FILTER_GENDER_OPTIONS.map((item) => (
-                  <FormControlLabel key={item} control={<Checkbox />} label={item} />
-                ))}
-              </FormGroup>
+              <FormControl fullWidth>
+                <InputLabel id="province" >Province</InputLabel>
+                <Select
+                  value={province}
+                  onChange={handleProvince}
+                >
+                  <MenuItem value="" key="None">
+                    {' '}
+                  </MenuItem>
+                  {Data.map((getprovinceId, index) => (
+                    <MenuItem value={getprovinceId.provincename} key={index}>
+                      {getprovinceId.provincename}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
+            <div>
+              <FormControl fullWidth>
+                <InputLabel id="city" >City</InputLabel>
+                <Select
+                  value={city}
+                  onChange={handleCity}
+                >
+                  <MenuItem value="" key="None">
+                    {' '}
+                  </MenuItem>
+                  {cityData.map((getcity, index) => (
+                    <MenuItem value={getcity.cityname} key={index}>
+                      {getcity.cityname}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </div>
 
             <div>
@@ -100,69 +179,36 @@ export default function ShopFilterSidebar({ isOpenFilter, onOpenFilter, onCloseF
               </Typography>
               <RadioGroup>
                 {FILTER_CATEGORY_OPTIONS.map((item) => (
-                  <FormControlLabel key={item} value={item} control={<Radio />} label={item} />
+                  <FormControlLabel checked={category === item} key={item} onClick={()=> setCategory(item)} value={item} control={<Radio />} label={item} />
                 ))}
               </RadioGroup>
             </div>
-
-            <div>
-              <Typography variant="subtitle1" gutterBottom>
-                Colors
-              </Typography>
-              <ColorManyPicker
-                name="colors"
-                colors={FILTER_COLOR_OPTIONS}
-                onChecked={(color) => [].includes(color)}
-                sx={{ maxWidth: 38 * 4 }}
-              />
-            </div>
-
             <div>
               <Typography variant="subtitle1" gutterBottom>
                 Price
               </Typography>
-              <RadioGroup>
-                {FILTER_PRICE_OPTIONS.map((item) => (
-                  <FormControlLabel key={item.value} value={item.value} control={<Radio />} label={item.label} />
-                ))}
-              </RadioGroup>
-            </div>
+              <Stack spacing={2} direction="row" sx={{ mt: 2 }}>
+                <TextField
+                  fullWidth
+                  type="number"
+                  label="Minimum"
+                  value={minPrice}
+                  onChange={(e)=> setMinPrice(e.target.value)}
+                />
+                <TextField
+                  fullWidth
+                  type="number"
+                  label="Maximum"
+                  value={maxPrice}
+                  onChange={(e)=> setMaxPrice(e.target.value)}
+                />
 
-            <div>
-              <Typography variant="subtitle1" gutterBottom>
-                Rating
-              </Typography>
-              <RadioGroup>
-                {FILTER_RATING_OPTIONS.map((item, index) => (
-                  <FormControlLabel
-                    key={item}
-                    value={item}
-                    control={
-                      <Radio
-                        disableRipple
-                        color="default"
-                        icon={<Rating readOnly value={4 - index} />}
-                        checkedIcon={<Rating readOnly value={4 - index} />}
-                      />
-                    }
-                    label="& Up"
-                    sx={{
-                      my: 0.5,
-                      borderRadius: 1,
-                      '& > :first-of-type': { py: 0.5 },
-                      '&:hover': {
-                        opacity: 0.48,
-                        '& > *': { bgcolor: 'transparent' },
-                      },
-                    }}
-                  />
-                ))}
-              </RadioGroup>
+              </Stack>
             </div>
           </Stack>
         </Scrollbar>
 
-        <Box sx={{ p: 3 }}>
+        <Stack sx={{ p: 3 }} spacing={0.5}>
           <Button
             fullWidth
             size="large"
@@ -170,10 +216,25 @@ export default function ShopFilterSidebar({ isOpenFilter, onOpenFilter, onCloseF
             color="inherit"
             variant="outlined"
             startIcon={<Iconify icon="ic:round-clear-all" />}
+            onClick={onClearAllClick}
           >
             Clear All
           </Button>
-        </Box>
+          <Button
+            fullWidth
+            size="large"
+            type="submit"
+            color="primary"
+            variant="contained"
+            // startIcon={<Iconify icon="ic:round-clear-all" />}
+            onClick={onApplyChangesClick}
+          >
+            Apply Changes
+          </Button>
+        </Stack>
+        {/* <Box sx={{ p: 3 }}>
+          
+        </Box> */}
       </Drawer>
     </>
   );
