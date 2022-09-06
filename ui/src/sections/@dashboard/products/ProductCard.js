@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 // material
-import { Box, Card, Typography, Stack } from '@mui/material';
+import { Box, Card, Typography, Stack, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import LocalHotelOutlinedIcon from '@mui/icons-material/LocalHotelOutlined';
 import BathtubOutlinedIcon from '@mui/icons-material/BathtubOutlined';
@@ -10,7 +11,8 @@ import CountertopsOutlinedIcon from '@mui/icons-material/CountertopsOutlined';
 import Moment from 'moment';
 
 import Label from '../../../components/Label';
-
+import {useUser} from '../../../layouts/dashboard'
+import OwnerProfileModal from '../../../pages/OwnerProfile';
 
 // ----------------------------------------------------------------------
 const ProductImgStyle = styled('img')({
@@ -27,9 +29,12 @@ ShopProductCard.propTypes = {
 };
 
 export default function ShopProductCard({ product }) {
-  const { area, location, description, bedRooms, washRooms, kitchens, rentalPrice, furnished, user, province, image, city, createdAt } = product;
+  const {user} = useUser()
+  const [open, setOpen] = useState(false);
+  const { area, location, description, bedRooms, washRooms, kitchens, rentalPrice, furnished, province, image, city, createdAt } = product;
 
   return (
+    
     <Card style={{ width: '100%' }}>
       <Box sx={{ pt: '100%', position: 'relative' }}>
         <Label
@@ -48,7 +53,7 @@ export default function ShopProductCard({ product }) {
         <ProductImgStyle alt={province} src={image} />
 
       </Box>
-
+      <OwnerProfileModal open={open} setOpen={setOpen} />
       <Stack spacing={2} sx={{ p: 3 }}>
         <Stack direction="row">
           {location}, {city}, {province}
@@ -82,6 +87,18 @@ export default function ShopProductCard({ product }) {
             {rentalPrice} PKR
           </Typography>
 
+        </Stack>
+        <Stack sx={{ mt: 4 }}>
+          <Button
+          // size= "small"
+            onClick={() => {
+              setOpen(true);
+            }}
+            // variant="contained"
+            
+          >
+             View Owner Profile
+          </Button>
         </Stack>
       </Stack>
     </Card>
