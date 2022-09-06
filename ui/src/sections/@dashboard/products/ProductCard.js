@@ -29,9 +29,9 @@ ShopProductCard.propTypes = {
 };
 
 export default function ShopProductCard({ product }) {
-  const {user} = useUser()
+  // const {user} = useUser()
   const [open, setOpen] = useState(false);
-  const { area, location, description, bedRooms, washRooms, kitchens, rentalPrice, furnished, province, image, city, createdAt } = product;
+  const { user,area, location, description, bedRooms, washRooms, kitchens, rentalPrice, furnished, province, image, city, createdAt } = product;
 
   return (
     
@@ -53,7 +53,7 @@ export default function ShopProductCard({ product }) {
         <ProductImgStyle alt={province} src={image} />
 
       </Box>
-      <OwnerProfileModal open={open} setOpen={setOpen} />
+      <OwnerProfileModal open={open} setOpen={setOpen} user={user} />
       <Stack spacing={2} sx={{ p: 3 }}>
         <Stack direction="row">
           {location}, {city}, {province}

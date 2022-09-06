@@ -73,7 +73,10 @@ export const HOUSES_QUERY = gql`
     createdAt
     user{
       id
+      firstName
+      lastName
       phoneNo
+      email
     }
       
     }

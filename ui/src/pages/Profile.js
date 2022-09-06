@@ -23,9 +23,9 @@ export default function Profile({currentUser}) {
         <Stack marginTop={-21} marginLeft={22}>
           <Stack marginLeft={25} spacing={7} direction="row" sx={{ mt: 2 }}>
             <Stack marginTop={2} >
-                  <h >First Name: </h>
+                  <h>First Name: </h>
             </Stack>
-            <Stack  marginLeft={2}spacing={2} direction="row" sx={{ mt: 2 }}>
+            <Stack  marginLeft={2} spacing={2} direction="row" sx={{ mt: 2 }}>
             <TextField
           disabled
           id="filled-disabled"

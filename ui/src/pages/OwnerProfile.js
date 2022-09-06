@@ -22,8 +22,9 @@ const style = {
   p: 4,
 };
 
-export default function OwnerProfileModal({ open, setOpen }) {
-    const {user} = useUser()
+export default function OwnerProfileModal({ open, setOpen,user }) {
+    // const {user} = useUser()
+
   
   const defaultValues = {
   

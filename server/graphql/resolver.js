@@ -62,7 +62,7 @@ const resolvers = {
         include: [{
           model: db.User,
           as: 'user',
-          fields: ['id','phoneNo']
+          // fields: ['id','phoneNo']
         }]
       })
       
