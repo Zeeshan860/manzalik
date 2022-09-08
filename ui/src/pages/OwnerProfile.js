@@ -67,9 +67,9 @@ export default function OwnerProfileModal({ open, setOpen,user }) {
           <Avatar sx={{ width: 140, height: 140 }} src={account.photoURL} alt="photoURL" />
         </Stack>
         <Stack marginTop={-21} >
-        <Stack marginLeft={1} spacing={7} direction="row" sx={{ mt:2 }}>
+        <Stack marginLeft={1} spacing={2} direction="row" sx={{ mt:2 }}>
             <Stack marginTop={2} >
-                  <h> FirstName: </h>
+                  <h> First Name: </h>
             </Stack>
             <Stack  marginLeft={0}spacing={2} direction="row" sx={{ mt: 2 }}>
             <TextField
@@ -80,9 +80,9 @@ export default function OwnerProfileModal({ open, setOpen,user }) {
         />
             </Stack>
           </Stack>
-          <Stack marginLeft={1} spacing={7} direction="row" sx={{ mt: 2 }}>
+          <Stack marginLeft={1} spacing={2} direction="row" sx={{ mt: 2 }}>
             <Stack marginTop={2} >
-                  <h >LastName: </h>
+                  <h >Last Name: </h>
             </Stack>
             <Stack  marginLeft={0}spacing={2} direction="row" sx={{ mt: 2 }}>
             <TextField
@@ -93,9 +93,9 @@ export default function OwnerProfileModal({ open, setOpen,user }) {
         />
             </Stack>
           </Stack>
-          <Stack marginLeft={1} spacing={8} direction="row" sx={{ mt: 2 }}>
+          <Stack marginLeft={1} spacing={3} direction="row" sx={{ mt: 2 }}>
             <Stack marginTop={2} >
-                  <h >PhoneNo: </h>
+                  <h >Phone No: </h>
             </Stack>
             <Stack  marginLeft={0}spacing={2} direction="row" sx={{ mt: 2 }}>
             <TextField
@@ -106,7 +106,7 @@ export default function OwnerProfileModal({ open, setOpen,user }) {
         />
             </Stack>
           </Stack>
-          <Stack marginLeft={1} spacing={11} direction="row" sx={{ mt: 2 }}>
+          <Stack marginLeft={1} spacing={7} direction="row" sx={{ mt: 2 }}>
             <Stack marginTop={2} >
                   <h >Email: </h>
             </Stack>
