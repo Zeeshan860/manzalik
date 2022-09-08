@@ -14,6 +14,7 @@ import Label from '../../../components/Label';
 import {useUser} from '../../../layouts/dashboard'
 import OwnerProfileModal from '../../../pages/OwnerProfile';
 
+
 // ----------------------------------------------------------------------
 const ProductImgStyle = styled('img')({
   top: 0,
@@ -32,6 +33,10 @@ export default function ShopProductCard({ product }) {
   // const {user} = useUser()
   const [open, setOpen] = useState(false);
   const { user,area, location, description, bedRooms, washRooms, kitchens, rentalPrice, furnished, province, image, city, createdAt } = product;
+  const copy =  () => {
+    
+    
+  }
 
   return (
     
@@ -71,9 +76,18 @@ export default function ShopProductCard({ product }) {
           <SquareFootOutlinedIcon /> <Stack>{area}</Stack>
         </Stack>
 
-        <Stack direction="row" style={{ marginTop: "10px" }}>
+        <Stack direction="row" style={{ marginTop: "10px"}}>
           <PhoneAndroidOutlinedIcon />
           <Stack style={{ marginLeft: "10px" }}>{user?.phoneNo}</Stack>
+          <Stack style={{ marginTop: "-6px" }}>
+      
+          <Button
+            onClick={copy}
+          >
+            Copy
+          </Button>
+       
+      </Stack>
         </Stack>
 
 
