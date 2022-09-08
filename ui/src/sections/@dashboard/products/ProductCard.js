@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 // material
 import { Box, Card, Typography, Stack, Button } from '@mui/material';
@@ -32,12 +32,16 @@ ShopProductCard.propTypes = {
 export default function ShopProductCard({ product }) {
   // const {user} = useUser()
   const [open, setOpen] = useState(false);
-  const { user,area, location, description, bedRooms, washRooms, kitchens, rentalPrice, furnished, province, image, city, createdAt } = product;
-  const copy =  () => {
-    
-    
-  }
+  const [copied, setCopied] = useState(false);
 
+  useEffect(() => {
+    if(copied) {
+      setTimeout(() => setCopied(false), 2000)
+    }
+  }, [copied])
+
+  const { user,area, location, description, bedRooms, washRooms, kitchens, rentalPrice, furnished, province, image, city, createdAt } = product;
+  
   return (
     
     <Card style={{ width: '100%' }}>
@@ -82,9 +86,13 @@ export default function ShopProductCard({ product }) {
           <Stack style={{ marginTop: "-6px" }}>
       
           <Button
-            onClick={copy}
+            onClick={() => {
+              navigator.clipboard.writeText(user?.phoneNo)
+              setCopied(true)
+            }}
+            disabled={copied}
           >
-            Copy
+            {copied ? 'Copied' : 'Copy'}
           </Button>
        
       </Stack>
